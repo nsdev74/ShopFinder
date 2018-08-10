@@ -16,8 +16,11 @@ export class PreferredComponent implements OnInit {
   ngOnInit() {
     this.reload();
   }
-  // Placeholder function
+
   removePreferred(id: number) {
+    // Dummy data
+    this.shopService.removeLikeShop(id);
+    this.reload();
   }
 
   // Preferred shops fetching function

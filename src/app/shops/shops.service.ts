@@ -67,8 +67,16 @@ export class ShopsService {
     this.prefShops.push(likedShop);
     this.shops.splice( this.shops.indexOf(likedShop), 1);
   }
+  // Dummy local function
+  removeLikeShop(id: number) {
+    let removedLikedShop: Shop;
+    removedLikedShop = this.prefShops.find(x => x.shopId === id);
+    this.shops.push(removedLikedShop);
+    this.prefShops.splice( this.prefShops.indexOf(removedLikedShop), 1);
+  }
 
   getPreferredShops() {
+    // Dummy function
     return this.prefShops.slice();
   }
 

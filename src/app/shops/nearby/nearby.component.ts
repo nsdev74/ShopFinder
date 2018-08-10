@@ -17,12 +17,13 @@ export class NearbyComponent implements OnInit {
   ngOnInit() {
     this.reload();
   }
-  // Placeholder Functions
+
   likeShop(id: number) {
     // Dummy data
     this.shopService.likeShop(id);
     this.reload();
   }
+  // Placeholder Function
   dislikeShop(id: number) {
 
   }
