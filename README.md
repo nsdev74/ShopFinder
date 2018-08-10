@@ -1,7 +1,7 @@
 # ShopFinder
 
 MEAN stack coding challenge project.
-Project study, guidelines and conception can be found [here]. (https://docs.google.com/document/d/1F0iZQ5LoI4vWC4NqgxOGogGbodKx6wFHQ4nOXTAwNNQ/edit#)
+Project study, guidelines and conception can be found [here](https://docs.google.com/document/d/1F0iZQ5LoI4vWC4NqgxOGogGbodKx6wFHQ4nOXTAwNNQ/edit#).
 
 #### Version 0.0.3
 
@@ -15,8 +15,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 You will need to have installed the following before starting the project:
 
-* [Node JS] (https://nodejs.org/en/)
-* [MongoDB] (https://www.mongodb.com/)
+* [Node JS](https://nodejs.org/en/)
+* [MongoDB](https://www.mongodb.com/)
 
 ### Setup
 
@@ -52,16 +52,16 @@ localhost:3000/
 
 ## Built with
 
-* [Node JS] (https://nodejs.org/en/)
-* [MongoDB] (https://www.mongodb.com/)
-* [Angular 6] (https://angular.io/)
-* [Express JS] (https://expressjs.com/)
-* [Bootstrap 3] (https://getbootstrap.com/docs/3.3/)
-* And other small libraries..
+* [Node JS](https://nodejs.org/en/)
+* [MongoDB](https://www.mongodb.com/)
+* [Angular 6](https://angular.io/)
+* [Express JS](https://expressjs.com/)
+* [Bootstrap 3](https://getbootstrap.com/docs/3.3/)
+* And other smaller libraries..
 
 ## Author
 
-* **Nakach Salim** @ [nsdev74] (https://github.com/nsdev74)
+* **Nakach Salim** @ [nsdev74](https://github.com/nsdev74)
 
 ## License
 
