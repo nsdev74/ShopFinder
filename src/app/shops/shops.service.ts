@@ -1,8 +1,9 @@
 import { Shop } from './shops.model';
 
 export class ShopsService {
-  // Dummy data for testing purposes
+  // Nearby shops array
   private shops: Shop[] = [
+    // Dummy data for testing purposes
     new Shop(
       'Shop1',
       50,
@@ -52,12 +53,19 @@ export class ShopsService {
       8
     )
   ];
-
+  // Preferred shop array
   private prefShops: Shop[] = [];
 
   getShops() {
     // Dummy function
     return this.shops.slice();
+  }
+  // Dummy local function
+  likeShop(id: number) {
+    let likedShop: Shop;
+    likedShop = this.shops.find(x => x.shopId === id);
+    this.prefShops.push(likedShop);
+    this.shops.splice( this.shops.indexOf(likedShop), 1);
   }
 
   getPreferredShops() {

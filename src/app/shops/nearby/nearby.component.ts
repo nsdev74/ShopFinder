@@ -19,7 +19,9 @@ export class NearbyComponent implements OnInit {
   }
   // Placeholder Functions
   likeShop(id: number) {
-
+    // Dummy data
+    this.shopService.likeShop(id);
+    this.reload();
   }
   dislikeShop(id: number) {
 
