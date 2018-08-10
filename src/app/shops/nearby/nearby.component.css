@@ -1,0 +1,34 @@
+
+.pull-down {
+  position: inherit;
+  padding-bottom: 0%;
+  margin-bottom: 0%;
+
+}
+.panel-heading {
+  min-height:25px ;
+}
+
+.panel {
+  padding-top: 0.2em;
+  margin: 0.1em;
+}
+
+.shopImage {
+  margin-bottom: 0.2em;
+}
+
+.panel {
+  min-height: 200px;
+  max-height: 200px;
+  min-width: 160px;
+  max-width: 160px;
+}
+
+.btn-success{
+  width: 60px;
+}
+
+.btn-danger{
+  width: 60px;
+}

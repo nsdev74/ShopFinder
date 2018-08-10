@@ -5,6 +5,7 @@ import { NearbyComponent } from './nearby/nearby.component';
 import { PreferredComponent } from './preferred/preferred.component';
 import { ShopsComponent } from './shops.component';
 import { ShopsRoutingModule } from './shops-routing.module';
+import { ShopsService } from './shops.service';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { ShopsRoutingModule } from './shops-routing.module';
     ShopsRoutingModule
   ],
   declarations: [NearbyComponent, PreferredComponent, ShopsComponent],
-  exports: [ShopsComponent]
+  exports: [ShopsComponent],
+  providers: [ShopsService]
 })
 export class ShopsModule { }
