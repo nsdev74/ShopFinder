@@ -53,8 +53,15 @@ export class ShopsService {
     )
   ];
 
+  private prefShops: Shop[] = [];
+
   getShops() {
     // Dummy function
     return this.shops.slice();
   }
+
+  getPreferredShops() {
+    return this.prefShops.slice();
+  }
+
 }
