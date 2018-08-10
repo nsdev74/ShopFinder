@@ -12,7 +12,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     BrowserModule,
     CoreModule,
-    AuthModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
