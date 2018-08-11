@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const {User} = require('../models/user');
+// Must outsource the secret to its own file that can be accessed by the middleware and users.js route later
 const secret = 'secret_text_that_is_obviously_not_complicated_or_secure_enough';
 
 const router = express.Router();
