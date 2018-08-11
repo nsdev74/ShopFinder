@@ -14,11 +14,9 @@ export class AuthService {
     this.http.post(
     'http://localhost:3000/api/users/signup', user
     ).subscribe ( res => {
-      if (res.message === 'Success!') {
       console.log(res);
       // Redirecting to sign in page
       this.router.navigate(['/signin']);
-      }
     });
   }
 }

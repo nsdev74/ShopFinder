@@ -1,8 +1,11 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+const Schema = mongoose.Schema;
+
+
 
 // User Schema
-var userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -22,6 +25,8 @@ var userSchema = new mongoose.Schema({
         }
        }
 })
+
+userSchema.plugin(uniqueValidator);
 
 // User Model
 var User = mongoose.model('User', userSchema)
