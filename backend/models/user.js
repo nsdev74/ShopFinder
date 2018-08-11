@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+// User Schema
 var userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -22,6 +23,7 @@ var userSchema = new mongoose.Schema({
        }
 })
 
+// User Model
 var User = mongoose.model('User', userSchema)
 
 module.exports = {User}

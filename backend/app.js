@@ -1,4 +1,5 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 // Local dependencies
 const {mongoose} = require('./db/mongoose');
 const {User} = require('./models/user');
@@ -8,6 +9,7 @@ const usersRoutes = require('./routes/users');
 
 const app = express();
 
+// Body parser settings
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -29,10 +31,8 @@ app.use((req, res, next) => {
 });
 
 
-// Dummy call
-app.use( (req,res, next) => {
-    console.log('Hello world!');
-    res.send('Hello world from express!');
-})
+
+// Routes
+app.use("/api/users", usersRoutes);
 
 module.exports = app;
