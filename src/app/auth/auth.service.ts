@@ -11,11 +11,9 @@ export class AuthService {
   signUp(email: string, password: string) {
     const user = {email: email, password: password};
     this.http.post(
-    'http://localhost:3000/api/users/', user
+    'http://localhost:3000/api/users/signup', user
     ).subscribe ( res => {
       console.log(res);
     });
   }
-
-
 }
