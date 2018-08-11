@@ -46,7 +46,7 @@ ng serve
 
 Next, to start the database, make sure you have MongoDB installed then run Mongod.exe through CMD by navigating to its location.
 
-The application should work with the default configuration, in case it doesn't, please modify the URI [inside this file](../backend/db/mongoose.js) to use your port and collection name after the / .
+The application should work with the default configuration, in case it doesn't, please modify the URI [inside this file](./../backend/db/mongoose.js) to use your port and collection name after the / .
 
 To start the server, open a second terminal, navigate to the project location then input the following before confirmation:
 
