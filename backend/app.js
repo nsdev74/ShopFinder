@@ -6,6 +6,7 @@ const {User} = require('./models/user');
 
 // Routes
 const usersRoutes = require('./routes/users');
+const userOpsRoutes = require('./routes/user-ops');
 
 const app = express();
 
@@ -34,5 +35,6 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/users", usersRoutes);
+app.use("/api/user-operations/", userOpsRoutes);
 
 module.exports = app;
