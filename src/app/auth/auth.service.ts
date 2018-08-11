@@ -12,11 +12,25 @@ export class AuthService {
   signUp(email: string, password: string) {
     const user: AuthData = {email: email, password: password};
     this.http.post(
-    'http://localhost:3000/api/users/signup', user
+      'http://localhost:3000/api/users/signup', user
     ).subscribe ( res => {
       console.log(res);
       // Redirecting to sign in page
       this.router.navigate(['/signin']);
     });
   }
+
+  signIn(email: string, password: string) {
+    const user: AuthData = {email: email, password: password};
+    this.http.post(
+      'http://localhost:3000/api/users/signin', user
+    ).subscribe ( res => {
+      console.log(res);
+      // Redirecting to nearby shops page
+      this.router.navigate(['/shops/nearby']);
+    });
+  }
+
+
+
 }

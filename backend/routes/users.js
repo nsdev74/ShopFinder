@@ -36,7 +36,9 @@ router.post("/signin", (req,res,next) => {
   User.findOne({ email: req.body.email }).then( user => {
     // If user is not found, authentication fails
     if (!user) {
-      return res.status(401);
+      return res.status(401).json({
+        message: 'Invalid user!'
+      })
     } else {
       fetchedUser = user;
     }
@@ -46,18 +48,23 @@ router.post("/signin", (req,res,next) => {
     .then(result => {
       if (!result) {
         // If newly hashed password doesn't equal stored hashed password, authentication fails
-        return res.status(401);
-      } else {
-        let token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id}, secret, { expiresIn: '2h'});
-        res.statusCode(200).json({
-          token: token
+        return res.status(401).json({
+          message: 'Invalid password!'
         })
       }
+        let token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id}, secret, { expiresIn: '2h'});
+        res.status(200).json({
+          token: token
+        })
+
+      console.log(token);
+
     })
     .catch(err => {
       // If other error, authentication fails
-      return res.status(401);
-      console.log(err);
+      return res.status(401).json({
+        message: 'An error occured'
+      })
     })
 })
 
