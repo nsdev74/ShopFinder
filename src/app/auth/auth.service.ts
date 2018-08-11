@@ -6,7 +6,13 @@ import { AuthData } from './auth-data.model';
 @Injectable()
 
 export class AuthService {
+
   private token: string;
+
+  getToken() {
+    return this.token;
+  }
+
   constructor(private http: HttpClient, private router: Router) {}
 
   signUp(email: string, password: string) {
@@ -27,8 +33,7 @@ export class AuthService {
     ).subscribe ( res => {
       console.log(res);
       // Storing the token
-      const token = res.token;
-      this.token = token;
+      this.token = res.token;
       // Redirecting to nearby shops page
       this.router.navigate(['/shops/nearby']);
     });
