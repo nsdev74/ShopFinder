@@ -1,65 +1,54 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { Shop } from './shops.model';
 
+
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class ShopsService {
+
+  private shopsUpdated = new Subject<Shop[]>();
+
+  constructor(private http: HttpClient) {}
+
   // Nearby shops array
-  private shops: Shop[] = [
-    // Dummy data for testing purposes
-    new Shop(
-      'Shop1',
-      50,
-      'http://placehold.it/150x150',
-      1
-    ),
-    new Shop(
-      'Shop2',
-      40,
-      'http://placehold.it/150x150',
-      2
-    ),
-    new Shop(
-      'Shop3',
-      30,
-      'http://placehold.it/150x150',
-      3
-    ),
-    new Shop(
-      'Shop4',
-      20,
-      'http://placehold.it/150x150',
-      4
-    ),
-    new Shop(
-      'Shop5',
-      19,
-      'http://placehold.it/150x150',
-      5
-    ),
-    new Shop(
-      'Shop6',
-      18,
-      'http://placehold.it/150x150',
-      6
-    ),
-    new Shop(
-      'Shop7',
-      17,
-      'http://placehold.it/150x150',
-      7
-    ),
-    new Shop(
-      'Shop8',
-      16,
-      'http://placehold.it/150x150',
-      8
-    )
-  ];
+  private shops: Shop[] = [];
   // Preferred shop array
   private prefShops: Shop[] = [];
 
   getShops() {
-    // Dummy function
-    return this.shops.slice();
+    // Dummy fetch function for testing purposes only
+    this.http
+      .get<{shops: any}>('http://localhost:3000/api/user-operations/shops')
+      .pipe(
+        map(shopData => {
+          return shopData.shops.map(shop => {
+            return {
+              shopId: shop._id,
+              shopName: shop.name,
+              shopImagePath: shop.picture
+            };
+          });
+        })
+      )
+      .subscribe(transformedShops => {
+        this.shops = transformedShops;
+        this.shopsUpdated.next([...this.shops]);
+      });
   }
+
+  // Shop update listener
+  getShopUpdateListener() {
+    return this.shopsUpdated.asObservable();
+  }
+
+
   // Dummy local function
   likeShop(id: number) {
     let likedShop: Shop;

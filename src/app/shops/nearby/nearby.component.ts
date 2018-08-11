@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { Shop } from '../shops.model';
 import { ShopsService } from '../shops.service';
@@ -14,8 +15,14 @@ export class NearbyComponent implements OnInit {
 
   constructor(private shopService: ShopsService) { }
 
+  private shopsSub: Subscription;
+
   ngOnInit() {
-    this.reload();
+    this.shopService.getShops();
+    this.shopsSub = this.shopService.getShopUpdateListener()
+      .subscribe((shops: Shop[]) => {
+        this.shops = shops;
+      });
   }
 
   likeShop(id: number) {
@@ -29,6 +36,6 @@ export class NearbyComponent implements OnInit {
   }
   // Shop fetching function
   reload() {
-    this.shops = this.shopService.getShops();
+    this.shopService.getShops();
   }
 }

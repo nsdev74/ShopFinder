@@ -7,7 +7,10 @@ const router = express.Router();
 // Dummy GET shops function
 router.get('/shops', (req, res) => {
   Shop.find().then( shops => {
-    res.send(shops);
+    res.status(200).json({
+      message: 'Success!',
+      shops: shops
+    })
   })
 })
 
