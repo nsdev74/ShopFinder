@@ -4,12 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShopsComponent } from './shops.component';
 import { NearbyComponent } from './nearby/nearby.component';
 import { PreferredComponent } from './preferred/preferred.component';
+import { AuthGuard } from '../auth/auth.guard';
 
 
 const shopsRoutes: Routes = [
-  { path: 'shops', component: ShopsComponent, children: [
-    { path: 'nearby', component: NearbyComponent },
-    { path: 'preferred', component: PreferredComponent }
+  // Using AuthGuard for all shop related paths, redirecting if the user is not signed in
+  { path: 'shops', component: ShopsComponent, canActivate: [AuthGuard] , children: [
+    { path: 'nearby', component: NearbyComponent},
+    { path: 'preferred', component: PreferredComponent}
   ] },
 ];
 
@@ -18,7 +20,6 @@ const shopsRoutes: Routes = [
     RouterModule.forChild(shopsRoutes)
   ],
   exports: [RouterModule],
-  providers: [
-  ]
+  providers: [AuthGuard]
 })
 export class ShopsRoutingModule {}

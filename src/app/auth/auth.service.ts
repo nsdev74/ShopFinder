@@ -8,12 +8,17 @@ import { Subject } from '../../../node_modules/rxjs';
 
 export class AuthService {
 
+  private isAuthenticated = false;
   private token: string;
   // Subject listener for authentication status
   private authStatusListener = new Subject<boolean>();
 
   getToken() {
     return this.token;
+  }
+
+  getAuth() {
+    return this.isAuthenticated;
   }
 
   getAuthStatusListener() {
@@ -44,6 +49,7 @@ export class AuthService {
       // Redirecting to nearby shops page
       this.router.navigate(['/shops/nearby']);
       // Changing the authentication status to true
+      this.isAuthenticated = true;
       this.authStatusListener.next(true);
     });
   }
@@ -53,6 +59,7 @@ export class AuthService {
     // Clearing the token and authentication status
     this.token = null;
     this.authStatusListener.next(false);
+    this.isAuthenticated = false;
     // Redirecting to home page
     this.router.navigate(['/']);
   }
