@@ -8,7 +8,8 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     // Throws an error if it fails, or proceed with next() if it succeeds
-    jwt.verify(token, secret);
+    const decodedToken  = jwt.verify(token, secret);
+    req.userData = {email: decodedToken.email, userId: decodedToken.userId}
     next();
   } catch (error) {
     res.status(401).json({ message: 'Authentication failed!'});
