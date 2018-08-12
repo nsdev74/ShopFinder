@@ -6,6 +6,7 @@ import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
+import { GeoLocationService } from '../core/geo-location.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { AuthService } from './auth.service';
     FormsModule
   ],
   declarations: [SigninComponent, SignupComponent],
-  providers: [AuthService]
+  providers: [AuthService, GeoLocationService]
 })
 export class AuthModule { }
