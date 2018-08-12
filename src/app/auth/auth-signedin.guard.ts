@@ -5,17 +5,17 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 
-export class AuthGuard implements CanActivate {
+export class AuthSignedInGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   : boolean | Observable<boolean> | Promise<boolean> {
     const isAuth = this.authService.getAuth();
-    // Redirect non authenticated users to the sign in page
-    if (!isAuth) {
-      this.router.navigate(['signin']);
+    // Redirect authenticated users to the main page
+    if (isAuth) {
+      this.router.navigate(['/']);
     }
-    return isAuth;
+    return !isAuth;
   }
 }
