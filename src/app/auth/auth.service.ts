@@ -2,15 +2,22 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
+import { Subject } from '../../../node_modules/rxjs';
 
 @Injectable()
 
 export class AuthService {
 
   private token: string;
+  // Subject listener for authentication status
+  private authStatusListener = new Subject<boolean>();
 
   getToken() {
     return this.token;
+  }
+
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
   }
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -36,6 +43,8 @@ export class AuthService {
       this.token = res.token;
       // Redirecting to nearby shops page
       this.router.navigate(['/shops/nearby']);
+      // Changing the authentication status to true
+      this.authStatusListener.next(true);
     });
   }
 

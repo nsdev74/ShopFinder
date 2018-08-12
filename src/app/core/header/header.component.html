@@ -6,21 +6,24 @@
 
   <div class="navbar-collapse">
     <ul class="navbar-nav nav">
-      <li routerLinkActive="active">
+      <li routerLinkActive="active" *ngIf="userIsAuthenticated">
         <a class="nav-link" routerLink="/shops/preferred">My preferred Shops</a>
       </li>
-      <li routerLinkActive="active">
+      <li routerLinkActive="active" *ngIf="userIsAuthenticated">
         <a class="nav-link" routerLink="/shops/nearby">Nearby Shops</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li routerLinkActive="active"><a class="nav-link" routerLink="signup">
+      <li routerLinkActive="active" *ngIf="!userIsAuthenticated"><a class="nav-link" routerLink="signup">
         <fa name="user-plus"></fa>
         Sign Up</a></li>
       &nbsp;&nbsp;
-      <li routerLinkActive="active"><a class="nav-link" routerLink="signin">
+      <li routerLinkActive="active" *ngIf="!userIsAuthenticated"><a class="nav-link" routerLink="signin">
         <fa name="sign-in"></fa>
-        Login</a></li>
+        Sign in</a></li>
+      <li routerLinkActive="active" *ngIf="userIsAuthenticated"><a class="nav-link" >
+        <fa name="sign-out"></fa>
+        Sign out</a></li>
   </ul>
   </div>
   </div>
