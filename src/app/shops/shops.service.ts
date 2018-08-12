@@ -43,19 +43,21 @@ export class ShopsService {
       });
   }
 
+  likeShop(shopId: string) {
+    this.http.post<{status: any}>('http://localhost:3000/api/user-operations/like/' + shopId, null)
+      .subscribe( res => {
+        console.log(res);
+        let likedShop: Shop;
+        likedShop = this.shops.find(x => x.shopId.toString() === shopId);
+        this.shops.splice( this.shops.indexOf(likedShop), 1);
+      });
+  }
+
   // Shop update listener
   getShopUpdateListener() {
     return this.shopsUpdated.asObservable();
   }
 
-
-  // Dummy local function
-  likeShop(id: number) {
-    let likedShop: Shop;
-    likedShop = this.shops.find(x => x.shopId === id);
-    this.prefShops.push(likedShop);
-    this.shops.splice( this.shops.indexOf(likedShop), 1);
-  }
   // Dummy local function
   removeLikeShop(id: number) {
     let removedLikedShop: Shop;

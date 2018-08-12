@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Shop } from '../shops.model';
@@ -9,7 +9,7 @@ import { ShopsService } from '../shops.service';
   templateUrl: './nearby.component.html',
   styleUrls: ['./nearby.component.css']
 })
-export class NearbyComponent implements OnInit {
+export class NearbyComponent implements OnInit, OnDestroy {
   // Shop array to display
   shops: Shop[];
 
@@ -23,20 +23,22 @@ export class NearbyComponent implements OnInit {
     this.shopsSub = this.shopService.getShopUpdateListener()
       .subscribe((shops: Shop[]) => {
         this.shops = shops;
+        console.log(this.shops);
       });
   }
 
-  likeShop(id: number) {
-    // Dummy data
+  ngOnDestroy() {
+    this.shopsSub.unsubscribe();
+  }
+
+  likeShop(id: string) {
+    // Liking shop
     this.shopService.likeShop(id);
-    this.reload();
+    // Reloading data
+    this.shopService.getShops();
   }
   // Placeholder Function
   dislikeShop(id: number) {
 
-  }
-  // Shop fetching function
-  reload() {
-    this.shopService.getShops();
   }
 }
