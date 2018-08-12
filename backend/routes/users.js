@@ -58,9 +58,6 @@ router.post("/signin", (req,res,next) => {
           token: token,
           expiresIn: 7200
         })
-
-      console.log(token);
-
     })
     .catch(err => {
       // If other error, authentication fails

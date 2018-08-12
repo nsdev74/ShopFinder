@@ -3,9 +3,12 @@
 MEAN stack coding challenge project.
 Project study, guidelines and conception can be found [here](https://docs.google.com/document/d/1F0iZQ5LoI4vWC4NqgxOGogGbodKx6wFHQ4nOXTAwNNQ/edit#).
 
-#### Version 0.0.5
+#### Version 0.1.5
 
 -Includes:
+* Route guards.
+* Geolocation request.
+* Proper authentication and query authorization.
 * Basic front end interactions and file structure.
 * JWT Authentication and hashed password registration.
 
