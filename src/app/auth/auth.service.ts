@@ -49,5 +49,11 @@ export class AuthService {
   }
 
 
-
+  signOut() {
+    // Clearing the token and authentication status
+    this.token = null;
+    this.authStatusListener.next(false);
+    // Redirecting to home page
+    this.router.navigate(['/']);
+  }
 }

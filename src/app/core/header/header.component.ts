@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Subscription } from '../../../../node_modules/rxjs';
+import { Router } from '../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -27,4 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authListenerSubs.unsubscribe();
   }
 
+  onSignOut() {
+    this.authService.signOut();
+  }
 }

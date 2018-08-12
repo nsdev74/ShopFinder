@@ -21,7 +21,9 @@
       <li routerLinkActive="active" *ngIf="!userIsAuthenticated"><a class="nav-link" routerLink="signin">
         <fa name="sign-in"></fa>
         Sign in</a></li>
-      <li routerLinkActive="active" *ngIf="userIsAuthenticated"><button class="btn btn-default navbar-btn">
+      <li routerLinkActive="active" *ngIf="userIsAuthenticated"><button
+        class="btn btn-default navbar-btn"
+        (click)="onSignOut()">
         <fa name="sign-out"></fa>
         Sign out</button></li>
   </ul>
