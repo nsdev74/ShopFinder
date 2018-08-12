@@ -55,7 +55,8 @@ router.post("/signin", (req,res,next) => {
       }
         let token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id}, secret, { expiresIn: '2h'});
         res.status(200).json({
-          token: token
+          token: token,
+          expiresIn: 7200
         })
 
       console.log(token);
