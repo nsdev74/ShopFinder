@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 import { NearbyComponent } from './nearby/nearby.component';
@@ -13,7 +14,8 @@ import { HTTP_INTERCEPTORS } from '../../../node_modules/@angular/common/http';
 @NgModule({
   imports: [
     CommonModule,
-    ShopsRoutingModule
+    ShopsRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [NearbyComponent, PreferredComponent, ShopsComponent],
   exports: [ShopsComponent],

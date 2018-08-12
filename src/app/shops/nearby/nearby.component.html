@@ -2,7 +2,7 @@
   <div class="row">
 
   <div class="panel panel-default col-xs-6 col-sm-3 col-md-3"
-  *ngFor="let shop of shops">
+  *ngFor="let shop of shops | paginate: { itemsPerPage: 21, currentPage: p }" >
     <h4 class="list-group-item-heading text-info">{{ shop.shopName }}</h4>
     <span class="panel-content">
     <img
@@ -17,6 +17,7 @@
   (click)="likeShop(shop.shopId)">Like</button>
   </div>
 
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
 
-  </div>
-  </div>

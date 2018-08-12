@@ -13,6 +13,7 @@ export class NearbyComponent implements OnInit {
   // Shop array to display
   shops: Shop[];
 
+  p = 1;
   constructor(private shopService: ShopsService) { }
 
   private shopsSub: Subscription;
