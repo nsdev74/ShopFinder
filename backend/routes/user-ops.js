@@ -87,7 +87,9 @@ router.get('/liked', checkAuth, (req,res) => {
           _id: { $in:
               user.preference.liked }}
       ).then( (shops) => {
-          res.send(shops);
+          res.status(200).json({
+            shops: shops
+          })
       })
   })
 })

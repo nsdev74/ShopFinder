@@ -14,7 +14,8 @@ import { GeoLocationService } from '../core/geo-location.service';
 
 export class ShopsService {
 
-  private shopsUpdated = new Subject<Shop[]>();
+  private nearbyShopsUpdated = new Subject<Shop[]>();
+  private prefShopsUpdated = new Subject<Shop[]>();
 
   constructor(private http: HttpClient, private geoService: GeoLocationService) {}
 
@@ -24,7 +25,7 @@ export class ShopsService {
   private prefShops: Shop[] = [];
 
   getShops() {
-    // Dummy fetch function for testing purposes only
+    // Nearby shops GET request
     const location = this.geoService.getLocation();
     this.http
       .get<{shops: any}>('http://localhost:3000/api/user-operations/shops/' + location.lat + '/' + location.lng)
@@ -41,7 +42,7 @@ export class ShopsService {
       )
       .subscribe(transformedShops => {
         this.shops = transformedShops;
-        this.shopsUpdated.next([...this.shops]);
+        this.nearbyShopsUpdated.next([...this.shops]);
       });
   }
 
@@ -59,7 +60,7 @@ export class ShopsService {
 
   // Shop update listener
   getShopUpdateListener() {
-    return this.shopsUpdated.asObservable();
+    return this.nearbyShopsUpdated.asObservable();
   }
 
 
@@ -70,7 +71,27 @@ export class ShopsService {
 
   getPreferredShops() {
     // Dummy function
-
+    this.http
+      .get<{shops: any}>('http://localhost:3000/api/user-operations/liked/')
+      .pipe(
+        map(shopData => {
+          return shopData.shops.map(shop => {
+            return {
+              shopId: shop._id,
+              shopName: shop.name,
+              shopImagePath: shop.picture
+            };
+          });
+        })
+      )
+      .subscribe(transformedShops => {
+        this.prefShops = transformedShops;
+        this.prefShopsUpdated.next([...this.prefShops]);
+      });
   }
 
+  // Shop update listener
+  getPrefShopUpdateListener() {
+    return this.prefShopsUpdated.asObservable();
+  }
 }

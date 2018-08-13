@@ -12,8 +12,9 @@ import { ShopsService } from '../shops.service';
 export class NearbyComponent implements OnInit, OnDestroy {
   // Shop array to display
   shops: Shop[];
-
+  // Pagination index
   p = 1;
+
   constructor(private shopService: ShopsService) { }
 
   private shopsSub: Subscription;
