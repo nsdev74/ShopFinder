@@ -25,6 +25,5 @@ export class PreferredComponent implements OnInit {
 
   // Preferred shops fetching function
   reload() {
-    this.shops = this.shopService.getPreferredShops();
   }
 }

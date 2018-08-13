@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Shop } from './shops.model';
+import { GeoLocationService } from '../core/geo-location.service';
 
 
 
@@ -15,7 +16,7 @@ export class ShopsService {
 
   private shopsUpdated = new Subject<Shop[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private geoService: GeoLocationService) {}
 
   // Nearby shops array
   private shops: Shop[] = [];
@@ -24,8 +25,9 @@ export class ShopsService {
 
   getShops() {
     // Dummy fetch function for testing purposes only
+    const location = this.geoService.getLocation();
     this.http
-      .get<{shops: any}>('http://localhost:3000/api/user-operations/shops')
+      .get<{shops: any}>('http://localhost:3000/api/user-operations/shops/' + location.lat + '/' + location.lng)
       .pipe(
         map(shopData => {
           return shopData.shops.map(shop => {
@@ -47,9 +49,8 @@ export class ShopsService {
     this.http.post<{status: any}>('http://localhost:3000/api/user-operations/like/' + shopId, null)
       .subscribe( res => {
         console.log(res);
-        let likedShop: Shop;
-        likedShop = this.shops.find(x => x.shopId.toString() === shopId);
-        this.shops.splice( this.shops.indexOf(likedShop), 1);
+        // Reloading shops after updating user preference
+        this.getShops();
       });
   }
 
@@ -58,17 +59,15 @@ export class ShopsService {
     return this.shopsUpdated.asObservable();
   }
 
-  // Dummy local function
+
   removeLikeShop(id: number) {
-    let removedLikedShop: Shop;
-    removedLikedShop = this.prefShops.find(x => x.shopId === id);
-    this.shops.push(removedLikedShop);
-    this.prefShops.splice( this.prefShops.indexOf(removedLikedShop), 1);
+    // Dummy function
+
   }
 
   getPreferredShops() {
     // Dummy function
-    return this.prefShops.slice();
+
   }
 
 }
