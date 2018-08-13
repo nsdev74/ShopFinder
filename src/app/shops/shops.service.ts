@@ -105,7 +105,7 @@ export class ShopsService {
   }
 
   dislikeShop(shopId: string) {
-    this.http.put('http://localhost:3000/api/user-operations/dislike/' + shopId, null)
+    this.http.patch('http://localhost:3000/api/user-operations/dislike/' + shopId, null)
       .subscribe( (res) => {
         console.log(res);
         // Reloading shop after updating user preference

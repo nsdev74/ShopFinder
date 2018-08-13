@@ -78,7 +78,6 @@ router.post('/like/:id', checkAuth, (req,res) => {
         res.status(200).json({
         message: 'Success!'
         });
-
     }, (e) => {
         res.status(400).send(e);
         console.log('Cannot update user content.')
@@ -136,47 +135,49 @@ router.delete('/like/:id', checkAuth, (req, res) => {
   } else {console.log('Invalid ID!')}
 })
 
-// PUT User's Dislike Shops API
-router.put('/dislike/:id', checkAuth, (req, res) => {
+// Dislike Shops PUT
+router.patch('/dislike/:id', checkAuth, (req, res) => {
   if(ObjectId.isValid(req.params.id))
   {
-      User.findById(req.userData.userId).then( (user) =>{
-        // Check if shop doesn't exist in liked
-        if (!user.preference.liked.includes(req.params.id)) {
-          const date = new Date();
-          date.setHours(date.getHours() + 2);
-          // Check if shop doesn't exist in disliked
-          if (!user.preference.disliked.shop.includes(req.params.id)) {
-            user.preference.disliked.shop.push(req.params.id);
-            user.preference.disliked.validUntil.push(date);
-          } else {
-            // Update ValidUntil if shop already exist in disliked
-            for(var i = user.preference.disliked.shop.length - 1; i >= 0; i--) {
-              if (user.preference.disliked.shop[i] === req.params.id) {
-                  user.preference.disliked.validUntil.splice(i, 1, date);
-              }
+    User.findById(req.userData.userId).then( (user) =>{
+      // Check if shop doesn't exist in liked
+      if (!user.preference.liked.includes(req.params.id)) {
+        const date = new Date();
+        date.setHours(date.getHours() + 2);
+        // Check if shop doesn't exist in disliked
+        if (!user.preference.disliked.shop.includes(req.params.id)) {
+          user.preference.disliked.shop.push(req.params.id);
+          user.preference.disliked.validUntil.push(date);
+        } else {
+          // Update ValidUntil if shop already exist in disliked
+          for(var i = user.preference.disliked.shop.length - 1; i >= 0; i--) {
+            if (user.preference.disliked.shop[i] === req.params.id) {
+                user.preference.disliked.validUntil.splice(i, 1, date);
             }
           }
-          user.save().then( (doc)=> {
+        }
+        user.save().then( (doc)=> {
           res.status(200).json({
-            message: 'Success!'
-          })
-      }, (e) => {
+          message: 'Success!'
+         })
+        }, (e) => {
           res.status(400).send(e);
           console.log('Cannot update user content.')
-      })
-    } else {
+        })
+      } else {
       // 409 Conflict if shop already exist in liked
-      console.log('Shop already preferred!');
-      res.status(409).json({
-       message: 'Shop already preferred!'
+        console.log('Shop already preferred!');
+        res.status(409).json({
+        message: 'Shop already preferred!'
       });
     }
    }, (e) => {
-          res.status(404).send(e);
-          console.log('User not found.');
+        res.status(404).send(e);
+        console.log('User not found.');
       })
-  } else {console.log('Invalid ID!')}
+  } else {
+    console.log('Invalid ID!');
+  }
 })
 
 module.exports = router;
