@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     // Throws an error if it fails, or proceed with next() if it succeeds
     const decodedToken  = jwt.verify(token, secret);
+    // Setting user data for req operations, email not currently used for anything
     req.userData = {email: decodedToken.email, userId: decodedToken.userId}
     next();
   } catch (error) {

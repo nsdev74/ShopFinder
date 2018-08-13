@@ -47,6 +47,20 @@ router.get('/shops/:lat/:lng', checkAuth, (req,res) => {
   })
 })
 
+// Preferred shops GET
+router.get('/liked', checkAuth, (req,res) => {
+  User.findById(req.userData.userId).then( (user) => {
+      Shop.find( {
+          _id: { $in:
+              user.preference.liked }}
+      ).then( (shops) => {
+          res.status(200).json({
+            shops: shops
+          })
+      })
+  })
+})
+
 // Liking a shop POST
 router.post('/like/:id', checkAuth, (req,res) => {
   if(ObjectId.isValid(req.params.id)) {
@@ -81,13 +95,14 @@ router.post('/like/:id', checkAuth, (req,res) => {
 })
 
 // Remove liked shop DELETE
-router.delete('/like/:id', (req, res) => {
-  if(ObjectID.isValid(req.params.id))
+router.delete('/like/:id', checkAuth, (req, res) => {
+  if(ObjectId.isValid(req.params.id))
   {
-      User.findById(req.params.id).then( (user) =>{
+      User.findById(req.userData.userId).then( (user) =>{
+        // Confirming the existence of the desired liked shop
         if(user.preference.liked.includes(req.params.id)) {
           for(var i = user.preference.liked.length - 1; i >= 0; i--) {
-              if(user.preference.liked[i] === req.params.sid) {
+              if(user.preference.liked[i] === req.params.id) {
                   user.preference.liked.splice(i, 1);
               }
           }
@@ -113,20 +128,6 @@ router.delete('/like/:id', (req, res) => {
           console.log('User not found.');
       })
   } else {console.log('Invalid ID!')}
-})
-
-// Preferred shops GET
-router.get('/liked', checkAuth, (req,res) => {
-  User.findById(req.userData.userId).then( (user) => {
-      Shop.find( {
-          _id: { $in:
-              user.preference.liked }}
-      ).then( (shops) => {
-          res.status(200).json({
-            shops: shops
-          })
-      })
-  })
 })
 
 module.exports = router;

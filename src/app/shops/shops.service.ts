@@ -24,6 +24,16 @@ export class ShopsService {
   // Preferred shop array
   private prefShops: Shop[] = [];
 
+  // Shop update listener
+  getPrefShopUpdateListener() {
+    return this.prefShopsUpdated.asObservable();
+  }
+
+  // Shop update listener
+  getShopUpdateListener() {
+    return this.nearbyShopsUpdated.asObservable();
+  }
+
   getShops() {
     // Nearby shops GET request
     const location = this.geoService.getLocation();
@@ -46,31 +56,8 @@ export class ShopsService {
       });
   }
 
-  likeShop(shopId: string) {
-    this.http.post<{status: any}>('http://localhost:3000/api/user-operations/like/' + shopId, null)
-      .subscribe( (res) => {
-        console.log(res);
-        // Reloading shops after updating user preference
-        this.getShops();
-      },
-      // Error display
-      error => console.log(error.error.message)
-    );
-  }
-
-  // Shop update listener
-  getShopUpdateListener() {
-    return this.nearbyShopsUpdated.asObservable();
-  }
-
-
-  removeLikeShop(id: number) {
-    // Dummy function
-
-  }
-
   getPreferredShops() {
-    // Dummy function
+    // Preferred shops GET request
     this.http
       .get<{shops: any}>('http://localhost:3000/api/user-operations/liked/')
       .pipe(
@@ -90,8 +77,32 @@ export class ShopsService {
       });
   }
 
-  // Shop update listener
-  getPrefShopUpdateListener() {
-    return this.prefShopsUpdated.asObservable();
+  likeShop(shopId: string) {
+    // Like shops POST request
+    this.http.post('http://localhost:3000/api/user-operations/like/' + shopId, null)
+      .subscribe( (res) => {
+        console.log(res);
+        // Reloading shops after updating user preference
+        this.getShops();
+      },
+      // Error display
+      error => console.log(error.error.message)
+    );
   }
+
+
+  removeLikeShop(shopId: string) {
+    // Remove preferred shops DELETE request
+    this.http.delete('http://localhost:3000/api/user-operations/like/' + shopId)
+      .subscribe( (res) => {
+        console.log(res);
+        // Reloading shops after updating user preference
+        this.getPreferredShops();
+      },
+      // Error display
+      error => console.log(error.error.message)
+    );
+  }
+
+
 }

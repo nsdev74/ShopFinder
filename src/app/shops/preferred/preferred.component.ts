@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from '../../../../node_modules/rxjs';
 
 import { Shop } from '../shops.model';
 import { ShopsService } from '../shops.service';
-import { Subscription } from '../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-preferred',
@@ -33,10 +33,9 @@ export class PreferredComponent implements OnInit, OnDestroy {
   }
 
 
-  removePreferred(id: number) {
-    // Dummy data
+  removePreferred(id: string) {
+    // Remove preferred shops function
     this.shopService.removeLikeShop(id);
-    // Reload
   }
 
 }
