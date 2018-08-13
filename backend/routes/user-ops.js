@@ -131,16 +131,16 @@ router.delete('/like/:id', checkAuth, (req, res) => {
 })
 
 // PATCH User's Dislike Shops API
-router.patch('/dislike/:id', (req, res) => {
-  if(ObjectID.isValid(req.params.id))
+router.patch('/dislike/:id', checkAuth, (req, res) => {
+  if(ObjectId.isValid(req.params.id))
   {
-      User.findById(req.params.id).then( (user) =>{
+      User.findById(req.userData.userId).then( (user) =>{
         // Check if shop doesn't exist in liked
         if (!user.preference.liked.includes(req.params.id)) {
           let date = new Date();
           date.setHours(date.getHours() + 2);
           // Check if shop doesn't exist in disliked
-          if (!user.preference.disliked.includes(req.params.id)) {
+          if (!user.preference.disliked.shop.includes(req.params.id)) {
             user.preference.disliked.shop.push(req.params.id);
             user.preference.disliked.validUntil.push(date);
           } else {

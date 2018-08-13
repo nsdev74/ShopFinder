@@ -104,5 +104,16 @@ export class ShopsService {
     );
   }
 
+  dislikeShop(shopId: string) {
+    this.http.patch('http://localhost:3000/api/user-operations/dislike/' + shopId, null)
+      .subscribe( (res) => {
+        console.log(res);
+        // Reloading shop after updating user preference
+        this.getPreferredShops();
+      },
+      // Error display
+      error => console.log(error.error.message)
+    );
+  }
 
 }
