@@ -136,8 +136,8 @@ router.delete('/like/:id', checkAuth, (req, res) => {
   } else {console.log('Invalid ID!')}
 })
 
-// PATCH User's Dislike Shops API
-router.patch('/dislike/:id', checkAuth, (req, res) => {
+// PUT User's Dislike Shops API
+router.put('/dislike/:id', checkAuth, (req, res) => {
   if(ObjectId.isValid(req.params.id))
   {
       User.findById(req.userData.userId).then( (user) =>{
