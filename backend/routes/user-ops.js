@@ -11,11 +11,17 @@ const ObjectId = require('mongodb').ObjectID;
 // Nearby shops GET
 router.get('/shops/:lat/:lng', checkAuth, (req,res) => {
   User.findById(req.userData.userId).then( (user) => {
-      // Fetching shops that aren't liked
+      // Storing valid dislikde shops in temporary array
+      let disliked = [];
+       for (let i=0; i<user.preference.disliked.shop.length; i++) {
+          if(user.preference.disliked.validUntil[i]>=Date.now()) {
+          disliked.push(user.preference.disliked.shop[i]);
+          }
+      }
+      // Fetching shops that aren't liked or disliked
       Shop.find( {
-          // Making sure preferred shops are excluded
           _id: { $nin:
-              user.preference.liked}}
+              disliked.concat(user.preference.liked)}}
       ).then( (shops) => {
           // Fetching user geolocation from query params
           let source = {

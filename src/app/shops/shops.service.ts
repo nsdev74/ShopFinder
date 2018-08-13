@@ -109,7 +109,7 @@ export class ShopsService {
       .subscribe( (res) => {
         console.log(res);
         // Reloading shop after updating user preference
-        this.getPreferredShops();
+        this.getShops();
       },
       // Error display
       error => console.log(error.error.message)

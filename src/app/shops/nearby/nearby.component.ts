@@ -36,7 +36,7 @@ export class NearbyComponent implements OnInit, OnDestroy {
     // Like shop function
     this.shopService.likeShop(id);
   }
-  // Placeholder Function
+
   dislikeShop(id: string) {
     // Dislike shop function
     this.shopService.dislikeShop(id);
