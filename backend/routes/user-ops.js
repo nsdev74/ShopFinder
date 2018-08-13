@@ -8,7 +8,7 @@ const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 
-// Nearby shops get
+// Nearby shops GET
 router.get('/shops/:lat/:lng', checkAuth, (req,res) => {
   User.findById(req.userData.userId).then( (user) => {
       // Fetching shops that aren't liked
@@ -78,6 +78,18 @@ router.post('/like/:id', checkAuth, (req,res) => {
       res.status(401).send();
       console.log('Invalid ID!');
   }
+})
+
+// Preferred shops GET
+router.get('/liked', checkAuth, (req,res) => {
+  User.findById(req.userData.userId).then( (user) => {
+      Shop.find( {
+          _id: { $in:
+              user.preference.liked }}
+      ).then( (shops) => {
+          res.send(shops);
+      })
+  })
 })
 
 module.exports = router;
