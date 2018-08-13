@@ -51,15 +51,25 @@ router.get('/shops/:lat/:lng', checkAuth, (req,res) => {
 router.post('/like/:id', checkAuth, (req,res) => {
   if(ObjectId.isValid(req.params.id)) {
     User.findById(req.userData.userId).then( (user) => {
+      // If no existing preferred shop with the same ID exists
+      if (!user.preference.liked.includes(req.params.id)) {
       user.preference.liked.push(req.params.id);
       user.save().then( (doc)=> {
         res.status(200).json({
         message: 'Success!'
         });
+
     }, (e) => {
         res.status(400).send(e);
         console.log('Cannot update user content.')
     })
+    } else {
+      // 409 Conflict
+      console.log('Shop already preferred!');
+      res.status(409).json({
+       message: 'Shop already preferred!'
+      });
+    }
     }, (e) => {
           res.status(404).send(e);
           console.log('User not found.');

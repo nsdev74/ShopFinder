@@ -47,11 +47,14 @@ export class ShopsService {
 
   likeShop(shopId: string) {
     this.http.post<{status: any}>('http://localhost:3000/api/user-operations/like/' + shopId, null)
-      .subscribe( res => {
+      .subscribe( (res) => {
         console.log(res);
         // Reloading shops after updating user preference
         this.getShops();
-      });
+      },
+      // Error display
+      error => console.log(error.error.message)
+    );
   }
 
   // Shop update listener
