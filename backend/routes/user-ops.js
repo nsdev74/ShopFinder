@@ -63,7 +63,7 @@ router.get('/liked', checkAuth, (req,res) => {
 
 // Liking a shop POST
 router.post('/like/:id', checkAuth, (req,res) => {
-  if(ObjectId.isValid(req.params.id)) {
+  if (ObjectId.isValid(req.params.id)) {
     User.findById(req.userData.userId).then( (user) => {
       // If no existing preferred shop with the same ID exists
       if (!user.preference.liked.includes(req.params.id)) {
@@ -96,13 +96,13 @@ router.post('/like/:id', checkAuth, (req,res) => {
 
 // Remove liked shop DELETE
 router.delete('/like/:id', checkAuth, (req, res) => {
-  if(ObjectId.isValid(req.params.id))
+  if (ObjectId.isValid(req.params.id))
   {
       User.findById(req.userData.userId).then( (user) =>{
         // Confirming the existence of the desired liked shop
-        if(user.preference.liked.includes(req.params.id)) {
+        if (user.preference.liked.includes(req.params.id)) {
           for(var i = user.preference.liked.length - 1; i >= 0; i--) {
-              if(user.preference.liked[i] === req.params.id) {
+              if (user.preference.liked[i] === req.params.id) {
                   user.preference.liked.splice(i, 1);
               }
           }
@@ -124,6 +124,49 @@ router.delete('/like/:id', checkAuth, (req, res) => {
       });
       }
     }, (e) => {
+          res.status(404).send(e);
+          console.log('User not found.');
+      })
+  } else {console.log('Invalid ID!')}
+})
+
+// PATCH User's Dislike Shops API
+router.patch('/dislike/:id', (req, res) => {
+  if(ObjectID.isValid(req.params.id))
+  {
+      User.findById(req.params.id).then( (user) =>{
+        // Check if shop doesn't exist in liked
+        if (!user.preference.liked.includes(req.params.id)) {
+          let date = new Date();
+          date.setHours(date.getHours() + 2);
+          // Check if shop doesn't exist in disliked
+          if (!user.preference.disliked.includes(req.params.id)) {
+            user.preference.disliked.shop.push(req.params.id);
+            user.preference.disliked.validUntil.push(date);
+          } else {
+            // Update ValidUntil if shop already exist in disliked
+            for(var i = user.preference.disliked.shop.length - 1; i >= 0; i--) {
+              if (user.preference.disliked.shop[i] === req.params.id) {
+                  user.preference.disliked.validUntil[i] = date;
+              }
+            }
+          }
+          user.save().then( (doc)=> {
+          res.status(200).json({
+            message: 'Success!'
+          })
+      }, (e) => {
+          res.status(400).send(e);
+          console.log('Cannot update user content.')
+      })
+    } else {
+      // 409 Conflict if shop already exist in liked
+      console.log('Shop already preferred!');
+      res.status(409).json({
+       message: 'Shop already preferred!'
+      });
+    }
+   }, (e) => {
           res.status(404).send(e);
           console.log('User not found.');
       })
