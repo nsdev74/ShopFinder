@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     preference : {
         liked: [String],
         disliked: {
-            shop: [ {type: mongoose.Schema.Types.ObjectId, ref:"Shop"}],
+            shop: [String],
             validUntil: [Date]
         }
        }
