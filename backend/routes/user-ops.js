@@ -80,6 +80,41 @@ router.post('/like/:id', checkAuth, (req,res) => {
   }
 })
 
+// Remove liked shop DELETE
+router.delete('/like/:id', (req, res) => {
+  if(ObjectID.isValid(req.params.id))
+  {
+      User.findById(req.params.id).then( (user) =>{
+        if(user.preference.liked.includes(req.params.id)) {
+          for(var i = user.preference.liked.length - 1; i >= 0; i--) {
+              if(user.preference.liked[i] === req.params.sid) {
+                  user.preference.liked.splice(i, 1);
+              }
+          }
+      user.save().then( (doc)=> {
+          // Success call
+          res.status(200).json({
+          message: 'Success!'
+          });
+      }, (e) => {
+          // Fail to remove liked shop
+          res.status(400).send(e);
+          console.log('Cannot update user content.')
+      })
+      } else {
+        // 404 Resource not found
+        console.log('Shop already preferred!');
+        res.status(404).json({
+        message: ' preferred!'
+      });
+      }
+    }, (e) => {
+          res.status(404).send(e);
+          console.log('User not found.');
+      })
+  } else {console.log('Invalid ID!')}
+})
+
 // Preferred shops GET
 router.get('/liked', checkAuth, (req,res) => {
   User.findById(req.userData.userId).then( (user) => {
