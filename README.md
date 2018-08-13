@@ -3,9 +3,10 @@
 MEAN stack coding challenge project.
 Project study, guidelines and conception can be found [here](https://docs.google.com/document/d/1F0iZQ5LoI4vWC4NqgxOGogGbodKx6wFHQ4nOXTAwNNQ/edit#).
 
-#### Version 0.1.5
+#### Version 0.2.2
 
 -Includes:
+* Core app features working properly for the client and the server.
 * Route guards.
 * Geolocation request.
 * Proper authentication and query authorization.
@@ -41,15 +42,9 @@ Now navigate to the project's path and run this command:
 npm install
 ```
 
-Wait for it to finish, once done, start the dev environment using:
+Wait for it to finish, afterwards, to start the database, make sure you have MongoDB installed, import [this](https://drive.google.com/file/d/1X9oGXDVLK8WURdYX3KJlqODaius4qjJq/view?usp=sharing) collection to the database as "shops" then run Mongod.exe through CMD by navigating to its location.
 
-```
-ng serve
-```
-
-Next, to start the database, make sure you have MongoDB installed then run Mongod.exe through CMD by navigating to its location.
-
-The application should work with the default configuration, in case it doesn't, please modify the URI [inside this file](backend/db/mongoose.js) to use your port and collection name after the / .
+Don't forget to modify the URI [inside this file](backend/db/mongoose.js) to use your port and database name after the / .
 
 To start the server, open a second terminal, navigate to the project location then input the following before confirmation:
 
@@ -57,7 +52,13 @@ To start the server, open a second terminal, navigate to the project location th
 npm run start:server
 ```
 
-Both the angular front end and backend should be up and running for local dev environment now, access the angular page by browsing this URL:
+Once done, start the Angular front end development environment using:
+
+```
+ng serve
+```
+
+Both the Angular front end and NodeJS backend should be up and running for local dev environment now, access the Angular page by browsing this URL:
 
 ```
 localhost:3000/
@@ -78,4 +79,4 @@ localhost:3000/
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
