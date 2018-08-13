@@ -143,7 +143,7 @@ router.put('/dislike/:id', checkAuth, (req, res) => {
       User.findById(req.userData.userId).then( (user) =>{
         // Check if shop doesn't exist in liked
         if (!user.preference.liked.includes(req.params.id)) {
-          let date = new Date();
+          const date = new Date();
           date.setHours(date.getHours() + 2);
           // Check if shop doesn't exist in disliked
           if (!user.preference.disliked.shop.includes(req.params.id)) {
@@ -153,7 +153,7 @@ router.put('/dislike/:id', checkAuth, (req, res) => {
             // Update ValidUntil if shop already exist in disliked
             for(var i = user.preference.disliked.shop.length - 1; i >= 0; i--) {
               if (user.preference.disliked.shop[i] === req.params.id) {
-                  user.preference.disliked.validUntil[i] = date;
+                  user.preference.disliked.validUntil.splice(i, 1, date);
               }
             }
           }
