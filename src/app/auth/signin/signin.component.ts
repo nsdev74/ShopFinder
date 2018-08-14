@@ -3,6 +3,7 @@ import { NgForm } from '../../../../node_modules/@angular/forms';
 import { AuthService } from '../auth.service';
 import { GeoLocationService } from '../../core/geo-location.service';
 import { Subscription } from '../../../../node_modules/rxjs';
+import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
 
 @Component({
   selector: 'app-signin',
@@ -11,7 +12,7 @@ import { Subscription } from '../../../../node_modules/rxjs';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private authService: AuthService, private geolocationService: GeoLocationService) { }
+  constructor(private authService: AuthService, private geolocationService: GeoLocationService, private spinner: NgxSpinnerService) { }
 
   private geoSub: Subscription;
 
@@ -21,6 +22,8 @@ export class SigninComponent implements OnInit {
   onSignIn(form: NgForm) {
     if (form.valid) {
       // Activate loading spinner
+      this.spinner.show();
+      // Request geolocation
       this.geoSub = this.geolocationService.geoLocation().subscribe(
         (output) => {
         this.geolocationService.setLocation(output.coords.latitude, output.coords.longitude);
@@ -28,14 +31,15 @@ export class SigninComponent implements OnInit {
         this.authService.signIn(form.value.email, form.value.password);
         this.geoSub.unsubscribe();
         // Deactivate loading spinner
+        this.spinner.hide();
       },
         (error) => {
+          // Deactivate loading spinner
+          this.spinner.hide();
+          // Display error message on the client
           console.log(error);
           this.geoSub.unsubscribe();
-          // Deactivate loading spinner
-          // Display error message on the client
-      }
-    );
+      });
     } else {
       // Placeholder error
       console.log('Form invalid!');
