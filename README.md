@@ -1,11 +1,15 @@
-# ShopFinder
+# Shop Finder
 
 MEAN stack coding challenge project.
 Project study, guidelines and conception can be found [here](https://docs.google.com/document/d/1F0iZQ5LoI4vWC4NqgxOGogGbodKx6wFHQ4nOXTAwNNQ/edit#).
 
-#### Version 0.2.2
+
+**Note regarding deployment:** The initial goal of this project was to deploy the application on heroku for general preview, however, due to browser's *geolocation requests being deprecated over non secure connections (non HTTPS)* that will not be possible *(Because we cannot install a SSL certificate globally for free unless you do it for your local machine only or every single machine that accesses the page **manually**)* , please keep that in mind if you intend to deploy this application or access it from a different device within the same local network.
+
+#### Version 0.2.7
 
 -Includes:
+* Main functionalities user experience.
 * Core app features working properly for the client and the server.
 * Route guards.
 * Geolocation request.
@@ -17,6 +21,14 @@ Project study, guidelines and conception can be found [here](https://docs.google
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+**Note: The instructions below are for windows, please refer to the official documentation for each of the resources mentioned to find the appropriate way to init the app for your OS.**
+
+**Additionally, it is recommended to use Chrome for this project, Firefox currently has some bugs when it comes to requesting geolocation and may result in slow behavior.**
+
+**Internet explorer 11 is known to not work, Edge may have issues as geolocation needs to be allowed from windows settings.**
+
+**Other browsers were not tested.**
+
 ### Prerequisites
 
 You will need to have installed the following before starting the project:
@@ -26,17 +38,19 @@ You will need to have installed the following before starting the project:
 
 ### Setup
 
-**Note: The instructions below are for windows, please refer to the official documentation for each of the resources mentioned to find the appropriate way to init the app for your OS.**
+Clone the repository using the following command on your git bash terminal:
 
+```
+$ git clone https://github.com/nsdev74/ShopFinder.git
+```
 
-
-Open a CMD or Batch terminal and install angular globally with the following command:
+Open a CMD or Bash terminal and install angular globally with the following command:
 
 ```
 npm install -g @angular/cli
 ```
 
-Now navigate to the project's path and run this command:
+Now navigate to the project's directory and run this command:
 
 ```
 npm install
