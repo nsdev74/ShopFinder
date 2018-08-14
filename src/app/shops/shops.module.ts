@@ -10,12 +10,14 @@ import { ShopsRoutingModule } from './shops-routing.module';
 import { ShopsService } from './shops.service';
 import { AuthInterceptor } from '../auth/auth-interceptor';
 import { HTTP_INTERCEPTORS } from '../../../node_modules/@angular/common/http';
+import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 
 @NgModule({
   imports: [
     CommonModule,
     ShopsRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule
   ],
   declarations: [NearbyComponent, PreferredComponent, ShopsComponent],
   exports: [ShopsComponent],

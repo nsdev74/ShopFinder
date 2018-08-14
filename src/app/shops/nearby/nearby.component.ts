@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { Shop } from '../shops.model';
 import { ShopsService } from '../shops.service';
+import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
 
 @Component({
   selector: 'app-nearby',
@@ -15,16 +16,18 @@ export class NearbyComponent implements OnInit, OnDestroy {
   // Pagination index
   p = 1;
 
-  constructor(private shopService: ShopsService) { }
+  constructor(private shopService: ShopsService, private spinner: NgxSpinnerService) { }
 
   private shopsSub: Subscription;
 
   ngOnInit() {
+    this.spinner.show();
     this.shopService.getShops();
     this.shopsSub = this.shopService.getShopUpdateListener()
       .subscribe((shops: Shop[]) => {
         this.shops = shops;
         console.log(this.shops);
+        this.spinner.hide();
       });
   }
 
