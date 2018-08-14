@@ -70,14 +70,14 @@ router.get('/liked', checkAuth, (req,res) => {
 // Liking a shop POST
 router.post('/like/:id', checkAuth, (req,res) => {
   if (ObjectId.isValid(req.params.id)) {
-    // Storing valid dislikde shops in temporary array
-    let disliked = [];
-    for (let i=0; i<user.preference.disliked.shop.length; i++) {
-       if(user.preference.disliked.validUntil[i]>=Date.now()) {
-       disliked.push(user.preference.disliked.shop[i]);
-       }
-   }
     User.findById(req.userData.userId).then( (user) => {
+      // Storing valid dislikde shops in temporary array
+      let disliked = [];
+      for (let i=0; i<user.preference.disliked.shop.length; i++) {
+        if(user.preference.disliked.validUntil[i]>=Date.now()) {
+          disliked.push(user.preference.disliked.shop[i]);
+        }
+      }
       // If no similar preferred shop or valid disliked shop exists
       if (!user.preference.liked.includes(req.params.id) || !disliked.includes(req.params.id)) {
       user.preference.liked.push(req.params.id);

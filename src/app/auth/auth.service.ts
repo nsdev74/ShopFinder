@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
 import { Subject } from '../../../node_modules/rxjs';
+import { GeoLocationService } from '../core/geo-location.service';
 
 @Injectable()
 
@@ -27,7 +28,7 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private geoService: GeoLocationService) {}
 
   signUp(email: string, password: string) {
     const user: AuthData = {email: email, password: password};
@@ -61,7 +62,8 @@ export class AuthService {
         // Saving the token locally
         const now = new Date();
         const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-        this.saveAuthData(token, expirationDate);
+        const location = this.geoService.getLocation();
+        this.saveAuthData(token, expirationDate, location);
         // Redirecting to nearby shops page
         this.router.navigate(['/shops/nearby']);
       }
@@ -109,29 +111,38 @@ export class AuthService {
   }
 
   // Local storage token saving function
-  private saveAuthData(token: string, expirationDate: Date) {
+  private saveAuthData(token: string, expirationDate: Date, location: any) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
+    localStorage.setItem('lat', location.lat);
+    localStorage.setItem('lng', location.lng);
   }
 
   // Local storage token clearing function
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('lat');
+    localStorage.removeItem('lng');
   }
 
   // Acquiring local storage token
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
+    const lat = localStorage.getItem('lat');
+    const lng = localStorage.getItem('lng');
+
     if (!token || !expirationDate) {
       // Exit if token or expiration date missing
       return;
+    } else {
+      this.geoService.setLocation(+lat, +lng);
+      return {
+        token: token,
+        expirationDate: new Date(expirationDate)
+      };
     }
-    return {
-      token: token,
-      expirationDate: new Date(expirationDate)
-    };
   }
 
 }
