@@ -16,8 +16,15 @@
           <button class="btn btn-danger btn-sm"
           (click)="removePreferred(shop.shopId); shop.isOperational = false;">Remove</button>
         </div>
+        <span *ngIf="!shop.isOperational">
+            <p class="processing">Processing..</p>
+        </span>
       </div>
     <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
     </div>
+    <!-- Loading spinner -->
+    <ngx-spinner
+    bdColor = "rgba(51, 51, 51, 0.8)" size = "medium" color = "#fff" type = "cube-transition"
+    ></ngx-spinner>
   </div>
 </div>
