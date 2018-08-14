@@ -3,7 +3,7 @@
     <!-- Check if array is empty or loading -->
     <div *ngIf="!(shops === undefined && shops.length == 0)">
       <div class="panel panel-default col-xs-6 col-sm-3 col-md-3"
-      *ngFor="let shop of shops | paginate: { itemsPerPage: 14, currentPage: p }">
+      *ngFor="let shop of shops | paginate: { itemsPerPage: 8, currentPage: p }">
         <h4 class="list-group-item-heading text-info">{{ shop.shopName }}</h4>
         <span class="panel-content">
         <img
@@ -20,11 +20,11 @@
             <p class="processing">Processing..</p>
         </span>
       </div>
-    <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
     </div>
     <!-- Loading spinner -->
     <ngx-spinner
     bdColor = "rgba(51, 51, 51, 0.8)" size = "medium" color = "#fff" type = "cube-transition"
     ></ngx-spinner>
   </div>
+  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
 </div>

@@ -10,19 +10,18 @@
 }
 
 .panel {
-  padding-top: 0.2em;
-  margin: 0.1em;
+  padding-top: 0.4em;
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  margin: 1em;
+  min-height: 222px;
+  max-height: 222px;
+  min-width: 168px;
+  max-width: 168px;
 }
 
 .shopImage {
-  margin-bottom: 0.2em;
-}
-
-.panel {
-  min-height: 200px;
-  max-height: 200px;
-  min-width: 160px;
-  max-width: 160px;
+  margin-bottom: 0.4em;
 }
 
 .btn-success{
@@ -33,10 +32,10 @@
   width: 60px;
 }
 
-.pagination {
-  padding-top: 25px;
-}
-
 .processing {
   text-align: center;
+}
+
+.container-fluid {
+  margin: auto; max-width: 784px;
 }
