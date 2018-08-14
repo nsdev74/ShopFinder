@@ -45,7 +45,9 @@ export class ShopsService {
             return {
               shopId: shop._id,
               shopName: shop.name,
-              shopImagePath: shop.picture
+              shopImagePath: shop.picture,
+              // Default button display value
+              isOperational: true
             };
           });
         })

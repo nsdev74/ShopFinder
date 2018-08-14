@@ -4,5 +4,7 @@ export interface Shop {
   shopDistance: number;
   shopImagePath: string;
   shopId: number;
+  // Bool value for buttons/loading dislay
+  isOperational: boolean;
 }
 

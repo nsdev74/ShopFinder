@@ -11,10 +11,13 @@
     class="img-responsive img-rounded shopImage"
     style="max-height: 150px;">
   </span>
+  <div *ngIf="shop.isOperational">
+    <!-- Disabling buttons when user select an operation  -->
   <button class="btn btn-danger pull-left  btn-sm"
-  (click)="dislikeShop(shop.shopId)">Dislike</button>
+  (click)="dislikeShop(shop.shopId); shop.isOperational = false;">Dislike</button>
   <button class="btn btn-success pull-right  btn-sm"
-  (click)="likeShop(shop.shopId)">Like</button>
+  (click)="likeShop(shop.shopId); shop.isOperational = false;">Like</button>
+  </div>
   </div>
 
   </div>
