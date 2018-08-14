@@ -12,8 +12,10 @@
       class="img-responsive img-rounded shopImage"
       style="max-height: 150px;">
     </span>
+    <div *ngIf="shop.isOperational">
     <button class="btn btn-danger btn-sm"
-    (click)="removePreferred(shop.shopId)">Remove</button>
+    (click)="removePreferred(shop.shopId); shop.isOperational = false;">Remove</button>
+    </div>
     </div>
 
     <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
