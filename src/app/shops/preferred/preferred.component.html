@@ -1,23 +1,23 @@
 <div class="container-fluid">
   <div class="row">
-
-
-    <div class="panel panel-default col-xs-6 col-sm-3 col-md-3"
-    *ngFor="let shop of shops | paginate: { itemsPerPage: 14, currentPage: p }">
-      <h4 class="list-group-item-heading text-info">{{ shop.shopName }}</h4>
-      <span class="panel-content">
-      <img
-      [src]='shop.shopImagePath'
-      alt='placeholder'
-      class="img-responsive img-rounded shopImage"
-      style="max-height: 150px;">
-    </span>
-    <div *ngIf="shop.isOperational">
-    <button class="btn btn-danger btn-sm"
-    (click)="removePreferred(shop.shopId); shop.isOperational = false;">Remove</button>
-    </div>
-    </div>
-
+    <!-- Check if array is empty or loading -->
+    <div *ngIf="!(shops === undefined && shops.length == 0)">
+      <div class="panel panel-default col-xs-6 col-sm-3 col-md-3"
+      *ngFor="let shop of shops | paginate: { itemsPerPage: 14, currentPage: p }">
+        <h4 class="list-group-item-heading text-info">{{ shop.shopName }}</h4>
+        <span class="panel-content">
+        <img
+        [src]='shop.shopImagePath'
+        alt='placeholder'
+        class="img-responsive img-rounded shopImage"
+        style="max-height: 150px;">
+        </span>
+        <div *ngIf="shop.isOperational">
+          <button class="btn btn-danger btn-sm"
+          (click)="removePreferred(shop.shopId); shop.isOperational = false;">Remove</button>
+        </div>
+      </div>
     <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
   </div>
 </div>

@@ -11,7 +11,7 @@ import { ShopsService } from '../shops.service';
 })
 export class PreferredComponent implements OnInit, OnDestroy {
   // Preferred shop array to display
-  shops: Shop[];
+  shops: Shop[] = [];
   // Pagination index
   p = 1;
 
