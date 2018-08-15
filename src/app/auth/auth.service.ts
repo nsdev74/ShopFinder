@@ -10,11 +10,16 @@ import { GeoLocationService } from '../core/geo-location.service';
 export class AuthService {
 
   private isAuthenticated = false;
+
+  private authError = false;
+
   private token: string;
   // This typescript version does not support NodeJS.Timer type
   private tokenTimer: any;
   // Subject listener for authentication status
   private authStatusListener = new Subject<boolean>();
+  // Subject listener for authentication errors
+  private authErrorListener = new Subject<boolean>();
 
   getToken() {
     return this.token;
@@ -22,6 +27,10 @@ export class AuthService {
 
   getAuth() {
     return this.isAuthenticated;
+  }
+
+  getErrorListener() {
+    return this.authErrorListener.asObservable();
   }
 
   getAuthStatusListener() {
@@ -51,7 +60,6 @@ export class AuthService {
       const token = res.token;
       this.token = token;
 
-      if (token) {
         // Token expiration
         const expiresInDuration = res.expiresIn;
         // Saving the timer for signOut clearance usage
@@ -66,8 +74,12 @@ export class AuthService {
         this.saveAuthData(token, expirationDate, location);
         // Redirecting to nearby shops page
         this.router.navigate(['/shops/nearby']);
-      }
-    });
+    },
+    error => {
+      // Error case
+      this.authErrorListener.next(true);
+    }
+  );
   }
 
   autoAuthUser() {

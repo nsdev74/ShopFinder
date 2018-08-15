@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '../../../../node_modules/@angular/forms';
 import { AuthService } from '../auth.service';
 import { GeoLocationService } from '../../core/geo-location.service';
@@ -10,17 +10,28 @@ import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService, private geolocationService: GeoLocationService, private spinner: NgxSpinnerService) { }
 
   private geoSub: Subscription;
 
-  incorrectIdPw = false;
+  private authErrorSub: Subscription;
 
-   error: string;
+  authError: boolean;
+
+  error: string;
 
   ngOnInit() {
+    this.authErrorSub = this.authService.getErrorListener().subscribe(
+      authStatus => {
+        this.authError = authStatus;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.authErrorSub.unsubscribe();
   }
 
   onSignIn(form: NgForm) {

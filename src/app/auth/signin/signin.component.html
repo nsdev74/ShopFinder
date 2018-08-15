@@ -53,8 +53,8 @@
           </div>
         </div>
         <!-- Incorrect email or password message -->
-        <div *ngIf="incorrectIdPw && SignInForm.submitted" class="alert alert-danger">
-          Incorrect email or password.
+        <div *ngIf="authError" class="alert alert-danger geoError">
+            An error occured during the authentication, did you enter the right email and password? 
         </div>
       <button
       class="btn btn-primary"
