@@ -68,6 +68,10 @@
       class="alert alert-danger">
         Password confirmation does not match.
       </div>
+      <!-- Registration error message -->
+      <div *ngIf="authError" class="alert alert-danger geoError">
+          An error has occured during registration, please try again with a different email.
+      </div>
       <button
       class="btn btn-primary"
       type="submit"

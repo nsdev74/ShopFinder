@@ -11,8 +11,6 @@ export class AuthService {
 
   private isAuthenticated = false;
 
-  private authError = false;
-
   private token: string;
   // This typescript version does not support NodeJS.Timer type
   private tokenTimer: any;
@@ -47,7 +45,12 @@ export class AuthService {
       console.log(res);
       // Redirecting to sign in page
       this.router.navigate(['/signin']);
-    });
+    },
+    error => {
+      // Error case
+      this.authErrorListener.next(true);
+    }
+  );
   }
 
   signIn(email: string, password: string) {
