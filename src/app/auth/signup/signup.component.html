@@ -1,29 +1,77 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-    <form (submit)="onSignup(SignupForm)" #SignupForm="ngForm">
+    <form (submit)="onSignup(SignUpForm)" #SignUpForm="ngForm">
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" ngModel class="form-control">
+        <input
+        type="email"
+        id="email"
+        name="email"
+        ngModel
+        email
+        required
+        #email="ngModel"
+        placeholder="Email"
+        class="form-control">
       </div>
       <div class="form-group">
         <label for="password">Password</label>
         <input
-          type="password"
-          id="password"
-          name="password"
-          ngModel
-          class="form-control">
+        type="password"
+        id="password"
+        name="password"
+        ngModel
+        required
+        minlength="6"
+        #password="ngModel"
+        placeholder="Password"
+        class="form-control">
       </div>
       <div class="form-group">
-        <label for="password">Re-enter password</label>
+        <label for="passwordConfirmation">Confirm password</label>
         <input
           type="password"
-          id="password2"
-          name="password"
+          id="passwordConfirmation"
+          name="passwordConfirmation"
           ngModel
-          class="form-control">
+          required
+          minlength="6"
+          [class.ng-invalid]="(passwordConfirmation.value !== password.value) && (passwordConfirmation.touched && password.valid)"
+          #passwordConfirmation="ngModel"
+          placeholder="Password confirmation"
+          class="form-control ng-invalid">
       </div>
-      <button class="btn btn-primary" type="submit">Sign Up</button>
+      <!-- Email validation -->
+      <div *ngIf="email.invalid && email.touched"
+      class="alert alert-danger">
+        <div *ngIf="email?.errors?.required">
+          Email is required.
+        </div>
+        <div *ngIf="email?.errors?.email">
+          Invalid email address.
+        </div>
+      </div>
+      <!-- Password validation -->
+      <div *ngIf="password.invalid && password.touched"
+      class="alert alert-danger">
+        <div *ngIf="password?.errors?.required">
+          Password is required.
+        </div>
+        <div *ngIf="password?.errors?.minlength">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <!-- Password confirmation validation -->
+
+        <div *ngIf="(passwordConfirmation.value !== password.value) && (passwordConfirmation.touched && password.valid)"
+        class="alert alert-danger">
+          Password confirmation does not match.
+        </div>
+
+      <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="!SignUpForm.valid || (passwordConfirmation.value !== password.value)">Sign Up</button>
     </form>
   </div>
 </div>
