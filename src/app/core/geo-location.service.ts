@@ -32,7 +32,8 @@ export class GeoLocationService {
               (error) => {
                 switch (error.code) {
                   case 1:
-                    observer.error('You have rejected access to your location, please refresh your browser to try again.');
+                    observer.error('You have rejected access to your location, please refresh your browser to try again. ' +
+                    'If you are using chrome, you may have to whitelist the website from geolocation request block on location settings.');
                     break;
                   case 2:
                     observer.error('Unable to determine your location, check your internet connection then try again.');

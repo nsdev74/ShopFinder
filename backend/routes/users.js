@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const emailValidator = require("email-validator");
 
 const {User} = require('../models/user');
 // Must outsource the secret to its own file that can be accessed by the middleware and users.js route later
@@ -10,6 +11,8 @@ const router = express.Router();
 
 // User sign up POST
 router.post("/signup", (req,res,next) => {
+  if ( req.body.password.length >= 6 && req.body.password.length <= 14
+    && emailValidator.validate(req.body.email)) {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       let user = new User({
@@ -25,10 +28,15 @@ router.post("/signup", (req,res,next) => {
         })
         .catch(err => {
           res.status(500).json({
-            error: err
+            message: 'An error occured'
           });
         });
     })
+  } else {
+    return res.status(401).json({
+      message: 'Invalid email or password!'
+    })
+  }
 })
 
 // User sign in POST
