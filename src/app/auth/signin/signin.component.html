@@ -23,6 +23,7 @@
           ngModel
           required
           minlength="6"
+          maxlength="14"
           #password="ngModel"
           placeholder="Password"
           class="form-control">
@@ -44,7 +45,7 @@
             Password is required.
           </div>
           <div *ngIf="password?.errors?.minlength">
-            Password must be at least 6 characters long.
+            Password must be between 6 and 14 characters.
           </div>
         </div>
         <!-- Incorrect email or password message -->

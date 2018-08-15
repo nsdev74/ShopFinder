@@ -23,6 +23,7 @@
         ngModel
         required
         minlength="6"
+        maxlength="14"
         #password="ngModel"
         placeholder="Password"
         class="form-control">
@@ -36,6 +37,7 @@
           ngModel
           required
           minlength="6"
+          maxlength="14"
           [class.ng-invalid]="(passwordConfirmation.value !== password.value) && (passwordConfirmation.touched && password.valid)"
           #passwordConfirmation="ngModel"
           placeholder="Password confirmation"
@@ -58,16 +60,14 @@
           Password is required.
         </div>
         <div *ngIf="password?.errors?.minlength">
-          Password must be at least 6 characters long.
+          Password must be between 6 and 14 characters.
         </div>
       </div>
       <!-- Password confirmation validation -->
-
-        <div *ngIf="(passwordConfirmation.value !== password.value) && (passwordConfirmation.touched && password.valid)"
-        class="alert alert-danger">
-          Password confirmation does not match.
-        </div>
-
+      <div *ngIf="(passwordConfirmation.value !== password.value) && (passwordConfirmation.touched && password.valid)"
+      class="alert alert-danger">
+        Password confirmation does not match.
+      </div>
       <button
       class="btn btn-primary"
       type="submit"
