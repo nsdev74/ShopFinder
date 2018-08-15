@@ -18,6 +18,8 @@ export class SigninComponent implements OnInit {
 
   incorrectIdPw = false;
 
+   error: string;
+
   ngOnInit() {
   }
 
@@ -39,6 +41,7 @@ export class SigninComponent implements OnInit {
           // Deactivate loading spinner
           this.spinner.hide();
           // Display error message on the client
+          this.error = error;
           console.log(error);
           this.geoSub.unsubscribe();
       });
