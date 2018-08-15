@@ -21,13 +21,13 @@
         <li routerLinkActive="active" *ngIf="!userIsAuthenticated">
           <a class="nav-link" routerLink="signup">
           <fa name="user-plus"></fa>
-          Sign Up
+          <span class="label-su">Sign Up</span>
           </a>
         </li>
         <li routerLinkActive="active" *ngIf="!userIsAuthenticated">
           <a class="nav-link" routerLink="signin">
           <fa name="sign-in"></fa>
-          Sign in
+          <span class="label-si">Sign In</span>
           </a>
         </li>
         <!-- Logout button if user is authenticated -->
