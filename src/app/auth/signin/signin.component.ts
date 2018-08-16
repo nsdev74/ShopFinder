@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { GeoLocationService } from '../../core/geo-location.service';
 import { Subscription } from '../../../../node_modules/rxjs';
 import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
+import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -12,7 +13,8 @@ import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
 })
 export class SigninComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService, private geolocationService: GeoLocationService, private spinner: NgxSpinnerService) { }
+  constructor(private authService: AuthService, private geolocationService: GeoLocationService,
+     private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
 
   private geoSub: Subscription;
 
@@ -22,12 +24,18 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   error: string;
 
+  newRegisteredUser: boolean;
+
   ngOnInit() {
     this.authErrorSub = this.authService.getErrorListener().subscribe(
       authStatus => {
         this.authError = authStatus;
       }
     );
+    const snapshot = this.route.snapshot;
+    if ( snapshot.queryParams.registered ) {
+      this.newRegisteredUser = true;
+    }
   }
 
   ngOnDestroy() {

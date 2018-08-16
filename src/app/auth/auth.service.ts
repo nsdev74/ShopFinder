@@ -48,7 +48,7 @@ export class AuthService {
     ).subscribe ( res => {
       console.log(res);
       // Redirecting to sign in page
-      this.router.navigate(['/signin']);
+      this.router.navigate(['/signin'], {queryParams: {registered: true}});
     },
     error => {
       // Error case
