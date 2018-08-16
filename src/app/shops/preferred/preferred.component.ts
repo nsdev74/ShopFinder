@@ -20,6 +20,8 @@ export class PreferredComponent implements OnInit, OnDestroy {
 
   shopError: boolean;
 
+  arrayEmpty: boolean;
+
   constructor(private shopService: ShopsService, private spinner: NgxSpinnerService) { }
 
   private shopsSub: Subscription;
@@ -33,6 +35,10 @@ export class PreferredComponent implements OnInit, OnDestroy {
         this.shops = shops;
         console.log(this.shops);
         this.spinner.hide();
+        this.arrayEmpty = false;
+        if (shops.length === 0) {
+          this.arrayEmpty = true;
+        }
       });
     // Error subscription
     this.shopErrorSub = this.shopService.getErrorListener()

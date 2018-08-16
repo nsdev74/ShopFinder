@@ -30,8 +30,12 @@
       </div>
     </div>
     <!-- Loading placeholder -->
-    <div class="loading" *ngIf="shops.length < 1 && !shopError">
+    <div class="loading" *ngIf="shops.length < 1 && !shopError && !arrayEmpty">
         Loading..
+    </div>
+    <!-- Empty shops case -->
+    <div class="loading" *ngIf="arrayEmpty && !shopError">
+        No shops to display.
     </div>
     <!-- Loading spinner -->
       <ngx-spinner

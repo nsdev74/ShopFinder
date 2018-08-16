@@ -24,6 +24,8 @@ export class NearbyComponent implements OnInit, OnDestroy {
 
   shopError: boolean;
 
+  arrayEmpty: boolean;
+
   ngOnInit() {
     this.spinner.show();
     this.shopService.getShops();
@@ -33,6 +35,10 @@ export class NearbyComponent implements OnInit, OnDestroy {
         this.shops = shops;
         console.log(this.shops);
         this.spinner.hide();
+        this.arrayEmpty = false;
+        if (shops.length === 0) {
+          this.arrayEmpty = true;
+        }
       }
     );
     // Error subscription
