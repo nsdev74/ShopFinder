@@ -61,7 +61,7 @@ npm install
 
 Wait for it to finish, afterwards, to start the database, make sure you have MongoDB installed, import [this](https://drive.google.com/file/d/1X9oGXDVLK8WURdYX3KJlqODaius4qjJq/view?usp=sharing) collection to the database as "shops" then run Mongod.exe through CMD by navigating to its location.
 
-Don't forget to modify the URI [inside this file](backend/db/mongoose.js) to use your port and database name after the / .
+Don't forget to modify the URI [inside this file](backend/config.json) to use your port and database name after the / .
 
 To start the server, open a second terminal, navigate to the project location then input the following before confirmation:
 
@@ -72,8 +72,10 @@ npm run start:server
 Once done, start the Angular front end development environment using:
 
 ```
-ng serve
+ng serve --aot
 ```
+**Note**: Due to a bug in the angular CLI, if you get errors past the first compilation, you will need to CTRL+C to exit and run the command again.
+
 
 Both the Angular front end and NodeJS backend should be up and running for local dev environment now, access the Angular page by browsing this URL:
 

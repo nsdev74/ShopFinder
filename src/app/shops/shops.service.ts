@@ -5,8 +5,9 @@ import { map } from 'rxjs/operators';
 
 import { Shop } from './shops.model';
 import { GeoLocationService } from '../core/geo-location.service';
+import { environment } from '../../environments/environment';
 
-
+const BACKEND_URL = environment.apiURL + 'user-operations/';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class ShopsService {
     // Nearby shops GET request
     const location = this.geoService.getLocation();
     this.http
-      .get<{shops: any}>('http://localhost:3000/api/user-operations/shops/' + location.lat + '/' + location.lng)
+      .get<{shops: any}>(BACKEND_URL + 'shops/' + location.lat + '/' + location.lng)
       .pipe(
         map(shopData => {
           return shopData.shops.map(shop => {
@@ -73,7 +74,7 @@ export class ShopsService {
   getPreferredShops() {
     // Preferred shops GET request
     this.http
-      .get<{shops: any}>('http://localhost:3000/api/user-operations/liked/')
+      .get<{shops: any}>(BACKEND_URL + 'liked')
       .pipe(
         map(shopData => {
           return shopData.shops.map(shop => {
@@ -100,7 +101,7 @@ export class ShopsService {
 
   likeShop(shopId: string) {
     // Like shops POST request
-    this.http.post('http://localhost:3000/api/user-operations/like/' + shopId, null)
+    this.http.post(BACKEND_URL + 'like/' + shopId, null)
       .subscribe( (res) => {
         console.log(res);
         // Reloading shops after updating user preference
@@ -116,7 +117,7 @@ export class ShopsService {
 
   removeLikeShop(shopId: string) {
     // Remove preferred shops DELETE request
-    this.http.delete('http://localhost:3000/api/user-operations/like/' + shopId)
+    this.http.delete(BACKEND_URL + 'like/' + shopId)
       .subscribe( (res) => {
         console.log(res);
         // Reloading shops after updating user preference
@@ -130,7 +131,7 @@ export class ShopsService {
   }
 
   dislikeShop(shopId: string) {
-    this.http.patch('http://localhost:3000/api/user-operations/dislike/' + shopId, null)
+    this.http.patch(BACKEND_URL + 'dislike/' + shopId, null)
       .subscribe( (res) => {
         console.log(res);
         // Reloading shop after updating user preference

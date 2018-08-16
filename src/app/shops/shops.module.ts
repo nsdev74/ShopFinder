@@ -9,7 +9,7 @@ import { ShopsComponent } from './shops.component';
 import { ShopsRoutingModule } from './shops-routing.module';
 import { ShopsService } from './shops.service';
 import { AuthInterceptor } from '../auth/auth-interceptor';
-import { HTTP_INTERCEPTORS } from '../../../node_modules/@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '../../../node_modules/@angular/common/http';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 
 @NgModule({
@@ -17,7 +17,8 @@ import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
     CommonModule,
     ShopsRoutingModule,
     NgxPaginationModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    HttpClientModule
   ],
   declarations: [NearbyComponent, PreferredComponent, ShopsComponent],
   exports: [ShopsComponent],

@@ -7,12 +7,14 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   imports: [
     CommonModule,
     AngularFontAwesomeModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AuthModule
   ],
   declarations: [HeaderComponent, HomeComponent],
   exports: [

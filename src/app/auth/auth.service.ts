@@ -5,6 +5,10 @@ import { AuthData } from './auth-data.model';
 import { Subject } from '../../../node_modules/rxjs';
 import { GeoLocationService } from '../core/geo-location.service';
 
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiURL + 'users/';
+
 @Injectable()
 
 export class AuthService {
@@ -40,7 +44,7 @@ export class AuthService {
   signUp(email: string, password: string) {
     const user: AuthData = {email: email, password: password};
     this.http.post(
-      'http://localhost:3000/api/users/signup', user
+      BACKEND_URL + 'signup', user
     ).subscribe ( res => {
       console.log(res);
       // Redirecting to sign in page
@@ -56,7 +60,7 @@ export class AuthService {
   signIn(email: string, password: string) {
     const user: AuthData = {email: email, password: password};
     this.http.post<{token: string, expiresIn: number}>(
-      'http://localhost:3000/api/users/signin', user
+      BACKEND_URL + 'signin', user
     ).subscribe ( res => {
       console.log(res);
       // Storing the token
