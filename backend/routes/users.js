@@ -1,5 +1,6 @@
+// Global dependencies
 const express = require('express');
-
+// Local dependencies
 const UserController = require('../controllers/users');
 
 const router = express.Router();

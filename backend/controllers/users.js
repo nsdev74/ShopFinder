@@ -1,38 +1,37 @@
+// Global dependencies
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const emailValidator = require("email-validator");
 const fs = require('fs')
-
+// Local dependencies
 const {User} = require('../models/user');
-// token secret
+// Token secret
 const secret = JSON.parse(fs.readFileSync(__dirname +'/../config.json', 'UTF-8')).secret;
 
 // Sign up function
 exports.signUp = (req,res) => {
   if ( req.body.password.length >= 6 && req.body.password.length <= 14
     && emailValidator.validate(req.body.email)) {
-  bcrypt.hash(req.body.password, 10)
+    bcrypt.hash(req.body.password, 10)
     .then(hash => {
       // Password hashing
       let user = new User({
         email: req.body.email,
         password: hash
       });
-      user.save()
-        .then(results => {
-          // Success case
-          res.status(201).json({
-            message: 'Success!',
-            result: results
-          });
-          console.log('Sign up attempt succeeded from ' + req.body.email);
-        })
-        .catch(err => {
-          // Error on registration
-          res.status(500).json({
-            message: 'An error occurred'
-          });
-          console.log('Sign up attempt failed from ' + req.body.email + ' ; ' + err);
+      user.save().then(results => {
+        // Success case
+        res.status(201).json({
+          message: 'Success!',
+          result: results
+        });
+         onsole.log('Sign up attempt succeeded from ' + req.body.email);
+      }).catch(err => {
+        // Error on registration
+        res.status(500).json({
+          message: 'An error occurred'
+        });
+        console.log('Sign up attempt failed from ' + req.body.email + ' ; ' + err);
         });
     })
   } else {
@@ -43,22 +42,23 @@ exports.signUp = (req,res) => {
     })
   }
 }
+
 // Sign in function
 exports.signIn = (req,res) => {
   let fetchedUser;
   const email = req.body.email;
   if (req.body.password.length >= 6 && req.body.password.length <= 14
     && emailValidator.validate(req.body.email)) {
-  User.findOne({ email: req.body.email }).then( user => {
-    // If user is not found, authentication fails
-    if (!user) {
+    User.findOne({ email: req.body.email }).then( user => {
+      // If user is not found, authentication fails
+      if (!user) {
       throw new Error('User email not found.');
-    } else {
-      fetchedUser = user;
-    // Return hashed password comparison for .then call
-    return bcrypt.compare(req.body.password, fetchedUser.password);
-    }
-  }).then(result => {
+      } else {
+        fetchedUser = user;
+        // Return hashed password comparison for .then call
+        return bcrypt.compare(req.body.password, fetchedUser.password);
+      }
+    }).then(result => {
       if (!result) {
         // If newly hashed password doesn't equal stored hashed password, authentication fails
         throw new Error('Incorrect password.');
@@ -71,8 +71,7 @@ exports.signIn = (req,res) => {
         })
         console.log('Sign in attempt succeeded, token ' + token + ' created by ' + email);
       }
-    })
-    .catch(err => {
+    }).catch(err => {
       // If other error, authentication fails
       console.log('Sign in attempt failed from ' + email + ' ; ' + err);
       return res.status(401).json({

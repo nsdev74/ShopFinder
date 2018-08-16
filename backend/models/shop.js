@@ -1,3 +1,4 @@
+// Global dependencies
 var mongoose = require('mongoose');
 
 // Shop Schema

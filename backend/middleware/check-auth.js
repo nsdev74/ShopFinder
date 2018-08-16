@@ -1,11 +1,12 @@
+// Global dependencies
 const jwt = require('jsonwebtoken');
 const fs = require('fs')
-// token secret
+// Local dependencies
 const secret = JSON.parse(fs.readFileSync(__dirname +'/../config.json', 'UTF-8')).secret;
 
 // Auth middleware
 module.exports = (req, res, next) => {
-  // Reaed the header after the Bearer keyword by splitting the string from the white space
+  // Reaed the header after the 'Bearer ' keyword by splitting the string from the white space
   try {
     const token = req.headers.authorization.split(" ")[1];
     // Throws an error if it fails, or proceed with next() if it succeeds
