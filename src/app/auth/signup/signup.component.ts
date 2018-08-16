@@ -1,8 +1,10 @@
+// Global dependencies
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../auth.service';
 import { NgForm } from '../../../../node_modules/@angular/forms';
 import { Subscription } from '../../../../node_modules/rxjs';
 import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
+// Local dependencies
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,6 +24,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       authStatus => {
         this.authError = authStatus;
         if (this.authError) {
+          // Hide loading spinner on error during submission
           this.spinner.hide();
         }
       }
@@ -34,11 +37,9 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   onSignup(form: NgForm) {
     if (form.valid) {
-      this.authService.signUp(form.value.email, form.value.password);
+      // Activate loading spinner
       this.spinner.show();
-    } else {
-      // Placeholder error
-      console.log('Form invalid!');
+      this.authService.signUp(form.value.email, form.value.password);
     }
   }
 }

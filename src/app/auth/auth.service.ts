@@ -1,10 +1,11 @@
+// Global dependencies
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
 import { Subject } from '../../../node_modules/rxjs';
+// Local dependencies
 import { GeoLocationService } from '../core/geo-location.service';
-
 import { environment } from '../../environments/environment';
 
 const BACKEND_URL = environment.apiURL + 'users/';
@@ -41,48 +42,47 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, private geoService: GeoLocationService) {}
 
+  // Sign up function
   signUp(email: string, password: string) {
     const user: AuthData = {email: email, password: password};
     this.http.post(
       BACKEND_URL + 'signup', user
-    ).subscribe ( res => {
-      console.log(res);
+    ).subscribe ( () => {
       // Redirecting to sign in page
       this.router.navigate(['/signin'], {queryParams: {registered: true}});
     },
-    error => {
+    () => {
       // Error case
       this.authErrorListener.next(true);
     }
   );
   }
 
+  // Sign in function
   signIn(email: string, password: string) {
     const user: AuthData = {email: email, password: password};
     this.http.post<{token: string, expiresIn: number}>(
       BACKEND_URL + 'signin', user
     ).subscribe ( res => {
-      console.log(res);
       // Storing the token
       const token = res.token;
       this.token = token;
-
-        // Token expiration
-        const expiresInDuration = res.expiresIn;
-        // Saving the timer for signOut clearance usage
-        this.setAuthTimer(expiresInDuration);
-        // Changing the authentication status to true
-        this.isAuthenticated = true;
-        this.authStatusListener.next(true);
-        // Saving the token locally
-        const now = new Date();
-        const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-        const location = this.geoService.getLocation();
-        this.saveAuthData(token, expirationDate, location);
-        // Redirecting to nearby shops page
-        this.router.navigate(['/shops/nearby']);
+      // Token expiration
+      const expiresInDuration = res.expiresIn;
+      // Saving the timer for signOut clearance usage
+      this.setAuthTimer(expiresInDuration);
+      // Changing the authentication status to true
+      this.isAuthenticated = true;
+      this.authStatusListener.next(true);
+      // Saving the token locally
+      const now = new Date();
+      const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+      const location = this.geoService.getLocation();
+      this.saveAuthData(token, expirationDate, location);
+      // Redirecting to nearby shops page
+      this.router.navigate(['/shops/nearby']);
     },
-    error => {
+    () => {
       // Error case
       this.authErrorListener.next(true);
     }
@@ -91,13 +91,16 @@ export class AuthService {
 
   autoAuthUser() {
     const authInfo = this.getAuthData();
+
     if (!authInfo) {
       // Exit if authentication information not found
       return;
     }
+
     const now = new Date();
     // Comparing token expiration date with current date & time
     const expiresIn = authInfo.expirationDate.getTime() - now.getTime();
+
     if (expiresIn > 0) {
       // If the token's duration is valid, persist usage
       this.token = authInfo.token;
@@ -106,6 +109,7 @@ export class AuthService {
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
     }
+
   }
 
 
@@ -155,6 +159,7 @@ export class AuthService {
     if (!token || !expirationDate) {
       // Exit if token or expiration date missing
       return;
+
     } else {
       this.geoService.setLocation(+lat, +lng);
       return {
@@ -162,6 +167,6 @@ export class AuthService {
         expirationDate: new Date(expirationDate)
       };
     }
-  }
 
+  }
 }

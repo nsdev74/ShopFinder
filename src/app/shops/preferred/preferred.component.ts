@@ -1,7 +1,8 @@
+// Global dependencies
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from '../../../../node_modules/rxjs';
 import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
-
+// Local dependencies
 import { Shop } from '../shops.model';
 import { ShopsService } from '../shops.service';
 
@@ -13,7 +14,7 @@ import { ShopsService } from '../shops.service';
 export class PreferredComponent implements OnInit, OnDestroy {
   // Preferred shop array to display
   shops: Shop[] = [];
-  // Pagination index
+  // Pagination initial index
   p = 1;
 
   private shopErrorSub: Subscription;
@@ -33,7 +34,6 @@ export class PreferredComponent implements OnInit, OnDestroy {
     this.shopsSub = this.shopService.getPrefShopUpdateListener()
       .subscribe((shops: Shop[]) => {
         this.shops = shops;
-        console.log(this.shops);
         this.spinner.hide();
         this.arrayEmpty = false;
         if (shops.length === 0) {

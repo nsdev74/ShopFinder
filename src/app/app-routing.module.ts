@@ -1,5 +1,7 @@
+// Global dependencies
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+// Local dependencies
 import { HomeComponent } from './core/home/home.component';
 
 const appRoutes: Routes = [
@@ -12,6 +14,5 @@ const appRoutes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
 
-}
+export class AppRoutingModule {  }

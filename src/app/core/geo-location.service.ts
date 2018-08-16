@@ -1,3 +1,4 @@
+// Global dependencies
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -21,32 +22,35 @@ export class GeoLocationService {
   geoLocation(geoLocationOptions?: any): Observable<any> {
     geoLocationOptions = geoLocationOptions || { timeout: 10000 };
 
-        return Observable.create(observer => {
+      return Observable.create(observer => {
 
-          if (window.navigator && window.navigator.geolocation) {
-            window.navigator.geolocation.getCurrentPosition(
-              (position) => {
-                observer.next(position);
-                observer.complete();
-              },
-              (error) => {
-                switch (error.code) {
-                  case 1:
-                    observer.error('You have rejected access to your location, please refresh your browser to try again. ' +
-                    'If you are using chrome, you may have to whitelist the website from geolocation request block on location settings.');
-                    break;
-                  case 2:
-                    observer.error('Unable to determine your location, check your internet connection then try again.');
-                    break;
-                  case 3:
-                    observer.error('Service timeout has been reached, please try again.');
-                    break;
-                }
-              },
-              geoLocationOptions);
+        if (window.navigator && window.navigator.geolocation) {
+          window.navigator.geolocation.getCurrentPosition(
+            (position) => {
+              observer.next(position);
+              observer.complete();
+            },
+            (error) => {
+              // Error code switch case
+              switch (error.code) {
+                case 1:
+                  observer.error('You have rejected access to your location, please refresh your browser to try again. ' +
+                  'If you are using chrome, you may have to whitelist the website from geolocation request block on location settings.');
+                  break;
+                case 2:
+                  observer.error('Unable to determine your location, check your internet connection then try again.');
+                  break;
+                case 3:
+                  observer.error('Service timeout has been reached, please try again.');
+                  break;
+              }
+            },
+            geoLocationOptions);
+
         } else {
               observer.error('Your browser does not support geolocation, you may not proceed.');
         }
-        });
-      }
-    }
+
+      });
+  }
+}

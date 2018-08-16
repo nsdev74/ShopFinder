@@ -1,14 +1,18 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+
     <!-- New registered user label -->
     <div *ngIf="newRegisteredUser" class="alert alert-success">
       Registration successful! Please proceed to login with your credentials.
     </div>
+
     <!-- Geolocation errors -->
     <div *ngIf="error" class="alert alert-danger geoError">
         {{error}}
     </div>
+
     <form (submit)="onSignIn(SignInForm)" #SignInForm="ngForm">
+
       <div class="form-group">
         <label for="email">E-mail</label>
         <input
@@ -22,6 +26,7 @@
         #email="ngModel"
         class="form-control">
       </div>
+
       <div class="form-group">
         <label for="password">Password</label>
         <input
@@ -36,6 +41,7 @@
           placeholder="Password"
           class="form-control">
       </div>
+
         <!-- Email validation -->
         <div *ngIf="email.invalid && email.touched"
         class="alert alert-danger">
@@ -46,6 +52,7 @@
             Invalid email address.
           </div>
         </div>
+
         <!-- Password validation -->
         <div *ngIf="password.invalid && password.touched"
         class="alert alert-danger">
@@ -56,20 +63,26 @@
             Password must be between 6 and 14 characters.
           </div>
         </div>
+
         <!-- Incorrect email or password message -->
         <div *ngIf="authError" class="alert alert-danger">
             An error has occurred during authentication, did you enter the right email and password?
         </div>
+
       <button
-      class="btn btn-primary"
-      type="submit"
-      [disabled]="!SignInForm.valid">
-      Sign In</button>
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!SignInForm.valid">
+        Sign In
+      </button>
       <a
         class="pull-right"
         routerLink="/signup">
-        Create an account</a>
+        Create an account
+      </a>
+
     </form>
+
     <!-- Loading spinner -->
     <ngx-spinner
     bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-scale-multiple"

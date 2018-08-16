@@ -1,6 +1,7 @@
+// Global dependencies
 import { Injectable } from '../../../node_modules/@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '../../../node_modules/@angular/common/http';
-
+// Local dependencies
 import { AuthService } from './auth.service';
 
 

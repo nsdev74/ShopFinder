@@ -1,6 +1,7 @@
+// Global dependencies
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+// Local dependencies
 import { ShopsComponent } from './shops.component';
 import { NearbyComponent } from './nearby/nearby.component';
 import { PreferredComponent } from './preferred/preferred.component';
@@ -22,4 +23,5 @@ const shopsRoutes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard]
 })
+
 export class ShopsRoutingModule {}

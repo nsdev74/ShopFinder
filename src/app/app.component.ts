@@ -1,4 +1,6 @@
+// Global dependencies
 import { Component, OnInit } from '@angular/core';
+// Local dependencies
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -10,7 +12,7 @@ export class AppComponent implements OnInit {
   title = 'Shop Finder';
 
   constructor(private authService: AuthService) {}
-  // Check & usage of user token during the application's start
+  // Check & use of user token during the application's start
   ngOnInit() {
     this.authService.autoAuthUser();
   }

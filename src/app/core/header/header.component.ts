@@ -1,7 +1,8 @@
+// Global dependencies
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
 import { Subscription } from '../../../../node_modules/rxjs';
-import { Router } from '../../../../node_modules/@angular/router';
+// Local dependencies
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',

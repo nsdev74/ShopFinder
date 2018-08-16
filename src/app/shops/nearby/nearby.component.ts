@@ -1,9 +1,10 @@
+// Global dependencies
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-
+import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
+// Local dependencies
 import { Shop } from '../shops.model';
 import { ShopsService } from '../shops.service';
-import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
 
 @Component({
   selector: 'app-nearby',
@@ -33,7 +34,6 @@ export class NearbyComponent implements OnInit, OnDestroy {
     this.shopsSub = this.shopService.getShopUpdateListener()
       .subscribe((shops: Shop[]) => {
         this.shops = shops;
-        console.log(this.shops);
         this.spinner.hide();
         this.arrayEmpty = false;
         if (shops.length === 0) {

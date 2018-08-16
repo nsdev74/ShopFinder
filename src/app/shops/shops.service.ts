@@ -1,8 +1,9 @@
+// Global dependencies
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+// Local dependencies
 import { Shop } from './shops.model';
 import { GeoLocationService } from '../core/geo-location.service';
 import { environment } from '../../environments/environment';
@@ -42,8 +43,8 @@ export class ShopsService {
     return this.shopErrorListener.asObservable();
   }
 
+  // Nearby shops fetching function
   getShops() {
-    // Nearby shops GET request
     const location = this.geoService.getLocation();
     this.http
       .get<{shops: any}>(BACKEND_URL + 'shops/' + location.lat + '/' + location.lng)
@@ -64,15 +65,15 @@ export class ShopsService {
         this.shops = transformedShops;
         this.nearbyShopsUpdated.next([...this.shops]);
       },
-      error => {
+      () => {
         // Error case
         this.shopErrorListener.next(true);
       }
     );
   }
 
+  // Preferred shops fetching function
   getPreferredShops() {
-    // Preferred shops GET request
     this.http
       .get<{shops: any}>(BACKEND_URL + 'liked')
       .pipe(
@@ -92,53 +93,50 @@ export class ShopsService {
         this.prefShops = transformedShops;
         this.prefShopsUpdated.next([...this.prefShops]);
       },
-      error => {
+      () => {
         // Error case
         this.shopErrorListener.next(true);
       }
     );
   }
 
+  // Like a shop button function
   likeShop(shopId: string) {
-    // Like shops POST request
     this.http.post(BACKEND_URL + 'like/' + shopId, null)
-      .subscribe( (res) => {
-        console.log(res);
+      .subscribe( () => {
         // Reloading shops after updating user preference
         this.getShops();
       },
       // Error display
-      error => {
+      () => {
         this.shopErrorListener.next(true);
       }
     );
   }
 
-
+  // Remove a liked shop button function
   removeLikeShop(shopId: string) {
-    // Remove preferred shops DELETE request
     this.http.delete(BACKEND_URL + 'like/' + shopId)
       .subscribe( (res) => {
-        console.log(res);
         // Reloading shops after updating user preference
         this.getPreferredShops();
       },
       // Error display
-      error => {
+      () => {
         this.shopErrorListener.next(true);
         }
     );
   }
 
+  // Dislike a shop button function
   dislikeShop(shopId: string) {
     this.http.patch(BACKEND_URL + 'dislike/' + shopId, null)
-      .subscribe( (res) => {
-        console.log(res);
+      .subscribe( () => {
         // Reloading shop after updating user preference
         this.getShops();
       },
       // Error display
-      error => {
+      () => {
         this.shopErrorListener.next(true);
       }
     );

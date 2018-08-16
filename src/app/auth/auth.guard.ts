@@ -1,6 +1,8 @@
+// Global dependencies
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '../../../node_modules/@angular/router';
 import { Observable } from '../../../node_modules/rxjs';
 import { Injectable } from '../../../node_modules/@angular/core';
+// Local dependencies
 import { AuthService } from './auth.service';
 
 @Injectable()
