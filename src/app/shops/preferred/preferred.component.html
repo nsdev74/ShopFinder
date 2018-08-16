@@ -1,5 +1,9 @@
 <div class="container-fluid">
   <div class="row">
+    <!-- Error message -->
+    <div *ngIf="shopError" class="alert alert-danger">
+        An error has occurred during the operation, please check your internet connection then try again.
+    </div>
     <!-- Check if array is empty or loading -->
     <div *ngIf="!(shops === undefined && shops.length == 0)">
       <div class="panel panel-default col-xs-6 col-sm-3 col-md-3"
@@ -12,19 +16,25 @@
         class="img-responsive img-rounded shopImage"
         style="max-height: 150px;">
         </span>
-        <div *ngIf="shop.isOperational">
+        <!-- Disabling buttons when user select an operation  -->
+        <div *ngIf="shop.isOperational || shopError">
           <button class="btn btn-danger btn-sm"
-          (click)="removePreferred(shop.shopId); shop.isOperational = false;">Remove</button>
+          (click)="removePreferred(shop.shopId); shop.isOperational = false; this.shopError = null;">Remove</button>
         </div>
-        <span *ngIf="!shop.isOperational">
+        <!-- Replacing buttons with loading text -->
+        <span *ngIf="!shop.isOperational && !shopError">
             <p class="processing">Processing..</p>
         </span>
       </div>
+    </div>
+    <!-- Loading placeholder -->
+    <div class="loading" *ngIf="shops.length < 1 && !shopError">
+        Loading..
     </div>
     <!-- Loading spinner -->
     <ngx-spinner
     bdColor = "rgba(51, 51, 51, 0.8)" size = "medium" color = "#fff" type = "cube-transition"
     ></ngx-spinner>
   </div>
-  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls *ngIf="shops.length > 0" class="pagination" (pageChange)="p = $event"></pagination-controls>
 </div>

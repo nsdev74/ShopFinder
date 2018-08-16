@@ -24,6 +24,9 @@ export class ShopsService {
   // Preferred shop array
   private prefShops: Shop[] = [];
 
+  // Subject listener for shop operations errors
+  private shopErrorListener = new Subject<boolean>();
+
   // Shop update listener
   getPrefShopUpdateListener() {
     return this.prefShopsUpdated.asObservable();
@@ -32,6 +35,10 @@ export class ShopsService {
   // Shop update listener
   getShopUpdateListener() {
     return this.nearbyShopsUpdated.asObservable();
+  }
+  // Error listener
+  getErrorListener() {
+    return this.shopErrorListener.asObservable();
   }
 
   getShops() {
@@ -55,7 +62,12 @@ export class ShopsService {
       .subscribe(transformedShops => {
         this.shops = transformedShops;
         this.nearbyShopsUpdated.next([...this.shops]);
-      });
+      },
+      error => {
+        // Error case
+        this.shopErrorListener.next(true);
+      }
+    );
   }
 
   getPreferredShops() {
@@ -78,7 +90,12 @@ export class ShopsService {
       .subscribe(transformedShops => {
         this.prefShops = transformedShops;
         this.prefShopsUpdated.next([...this.prefShops]);
-      });
+      },
+      error => {
+        // Error case
+        this.shopErrorListener.next(true);
+      }
+    );
   }
 
   likeShop(shopId: string) {
@@ -90,7 +107,9 @@ export class ShopsService {
         this.getShops();
       },
       // Error display
-      error => console.log(error.error.message)
+      error => {
+        this.shopErrorListener.next(true);
+      }
     );
   }
 
@@ -104,7 +123,9 @@ export class ShopsService {
         this.getPreferredShops();
       },
       // Error display
-      error => console.log(error.error.message)
+      error => {
+        this.shopErrorListener.next(true);
+        }
     );
   }
 
@@ -116,7 +137,9 @@ export class ShopsService {
         this.getShops();
       },
       // Error display
-      error => console.log(error.error.message)
+      error => {
+        this.shopErrorListener.next(true);
+      }
     );
   }
 

@@ -16,6 +16,10 @@ export class PreferredComponent implements OnInit, OnDestroy {
   // Pagination index
   p = 1;
 
+  private shopErrorSub: Subscription;
+
+  shopError: boolean;
+
   constructor(private shopService: ShopsService, private spinner: NgxSpinnerService) { }
 
   private shopsSub: Subscription;
@@ -23,16 +27,26 @@ export class PreferredComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.spinner.show();
     this.shopService.getPreferredShops();
+    // Shop array subscription
     this.shopsSub = this.shopService.getPrefShopUpdateListener()
       .subscribe((shops: Shop[]) => {
         this.shops = shops;
         console.log(this.shops);
         this.spinner.hide();
       });
+    // Error subscription
+    this.shopErrorSub = this.shopService.getErrorListener()
+      .subscribe( errorStatus => {
+        this.shopError = errorStatus;
+        if (errorStatus) {
+          this.spinner.hide();
+        }
+      });
   }
 
   ngOnDestroy() {
     this.shopsSub.unsubscribe();
+    this.shopErrorSub.unsubscribe();
   }
 
 

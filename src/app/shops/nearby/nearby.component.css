@@ -39,3 +39,8 @@
 .container-fluid {
   margin: auto; max-width: 784px;
 }
+
+.loading {
+  padding: 200px;
+  font-size: 100px;
+}

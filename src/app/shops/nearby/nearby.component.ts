@@ -20,19 +20,34 @@ export class NearbyComponent implements OnInit, OnDestroy {
 
   private shopsSub: Subscription;
 
+  private shopErrorSub: Subscription;
+
+  shopError: boolean;
+
   ngOnInit() {
     this.spinner.show();
     this.shopService.getShops();
+    // Shop array subscription
     this.shopsSub = this.shopService.getShopUpdateListener()
       .subscribe((shops: Shop[]) => {
         this.shops = shops;
         console.log(this.shops);
         this.spinner.hide();
+      }
+    );
+    // Error subscription
+    this.shopErrorSub = this.shopService.getErrorListener()
+      .subscribe( errorStatus => {
+        this.shopError = errorStatus;
+        if (errorStatus) {
+          this.spinner.hide();
+        }
       });
   }
 
   ngOnDestroy() {
     this.shopsSub.unsubscribe();
+    this.shopErrorSub.unsubscribe();
   }
 
   likeShop(id: string) {
