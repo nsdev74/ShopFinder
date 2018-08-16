@@ -37,6 +37,13 @@
 }
 
 .loading {
-  padding: 200px;
-  font-size: 100px;
+  padding: auto;
+  margin: auto;
+  min-width: 50px;
+  max-width: 600px;
+  min-height: 500px;
+  max-height: 600px;
+  font-size: 50px;
+  text-align: center;
+  line-height: 500px;
 }
