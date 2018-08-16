@@ -42,13 +42,14 @@ router.get('/shops/:lat/:lng', checkAuth, (req,res) => {
           shops.sort( function(a,b) {
               return a.distance.radians-b.distance.radians;
           })
+          console.log('Nearby shops displayed by '+req.userData.email);
           res.status(200).json({
             message: 'Success!',
             shops: shops
           })
       }, (e) => {
         res.status(404).send(e);
-        console.log('Unable to fetch nearby shops.');
+        console.log('Unable to fetch nearby shops by '+req.userData.email);
       })
   })
 })
@@ -60,9 +61,13 @@ router.get('/liked', checkAuth, (req,res) => {
           _id: { $in:
               user.preference.liked }}
       ).then( (shops) => {
+          console.log('Preferred shops displayed by '+req.userData.email);
           res.status(200).json({
             shops: shops
           })
+      }, (e) => {
+        res.status(404).send(e);
+        console.log('Unable to fetch preferred shops by '+req.userData.email);
       })
   })
 })
@@ -82,27 +87,28 @@ router.post('/like/:id', checkAuth, (req,res) => {
       if (!user.preference.liked.includes(req.params.id) || !disliked.includes(req.params.id)) {
       user.preference.liked.push(req.params.id);
       user.save().then( (doc)=> {
+        console.log(req.userData.email + ' liked the shop: ' + req.params.id);
         res.status(200).json({
         message: 'Success!'
         });
     }, (e) => {
         res.status(400).send(e);
-        console.log('Cannot update user content.')
+        console.log(req.userData.email + ' cannot like the shop: ' + req.params.id);
     })
     } else {
       // 409 Conflict
-      console.log('Shop already preferred!');
+      console.log(req.userData.email + 'already preferred the shop: ' + req.params.id);
       res.status(409).json({
        message: 'Shop already preferred!'
       });
     }
     }, (e) => {
           res.status(404).send(e);
-          console.log('User not found.');
+          console.log('An error has occurred while trying to find user ' + req.userData.email);
     })
     } else {
       res.status(401).send();
-      console.log('Invalid ID!');
+      console.log('Invalid shop ID ' + req.params.id);
   }
 })
 
@@ -120,26 +126,29 @@ router.delete('/like/:id', checkAuth, (req, res) => {
           }
       user.save().then( (doc)=> {
           // Success call
+          console.log(req.userData.email + ' removed ' + req.params.id + ' from their preferred shops');
           res.status(200).json({
           message: 'Success!'
           });
       }, (e) => {
           // Fail to remove liked shop
           res.status(400).send(e);
-          console.log('Cannot update user content.')
+          console.log('Cannot update content for user' + req.userData.email)
       })
       } else {
         // 404 Resource not found
-        console.log('Shop already preferred!');
+        console.log(req.params.id + 'already preferred by' + req.userData.id);
         res.status(404).json({
         message: ' preferred!'
       });
       }
     }, (e) => {
           res.status(404).send(e);
-          console.log('User not found.');
+          console.log('User '+ req.userData.id +' not found.');
       })
-  } else {console.log('Invalid ID!')}
+  } else {
+    console.log('Invalid shop ID ' + req.params.id);
+  }
 })
 
 // Dislike Shops PUT
@@ -164,26 +173,27 @@ router.patch('/dislike/:id', checkAuth, (req, res) => {
           }
         }
         user.save().then( (doc)=> {
+          console.log(req.userData.email + ' disliked the shop:' + req.params.id);
           res.status(200).json({
           message: 'Success!'
          })
         }, (e) => {
+          console.log(req.userData.email + ' cannot dislike ' + req.params.id);
           res.status(400).send(e);
-          console.log('Cannot update user content.')
         })
       } else {
       // 409 Conflict if shop already exist in liked
-        console.log('Shop already preferred!');
+      console.log(req.userData.email + ' attempted to dislike ' + req.params.id + ' which was already liked');
         res.status(409).json({
         message: 'Shop already preferred!'
       });
     }
    }, (e) => {
+        console.log('User ' + req.userData.userId + ' not found');
         res.status(404).send(e);
-        console.log('User not found.');
       })
   } else {
-    console.log('Invalid ID!');
+    console.log('Invalid shop ID' + req.params.id);
   }
 })
 

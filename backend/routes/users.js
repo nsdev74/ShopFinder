@@ -29,7 +29,7 @@ router.post("/signup", (req,res,next) => {
         })
         .catch(err => {
           res.status(500).json({
-            message: 'An error occured'
+            message: 'An error occurred'
           });
           console.log('Sign up attempt failed from ' + req.body.email + ' ; ' + err);
         });
@@ -75,7 +75,7 @@ router.post("/signin", (req,res,next) => {
       // If other error, authentication fails
       console.log('Sign in attempt failed from ' + email + ' ; ' + err);
       return res.status(401).json({
-        message: 'An error occured'
+        message: 'An error occurred'
       })
     })
   } else {
