@@ -1,0 +1,4 @@
+{
+  "DBUrl" : "mongodb://localhost:27017/ShopFinder",
+  "secret" : "secret_text_that_is_obviously_not_complicated_or_secure_enough"
+}

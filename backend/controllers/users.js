@@ -1,10 +1,11 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const emailValidator = require("email-validator");
+const fs = require('fs')
 
 const {User} = require('../models/user');
-// Must outsource the secret to its own file that can be accessed by the middleware and users.js route later
-const secret = 'secret_text_that_is_obviously_not_complicated_or_secure_enough';
+// token secret
+const secret = JSON.parse(fs.readFileSync(__dirname +'/../config.json', 'UTF-8')).secret;
 
 // Sign up function
 exports.signUp = (req,res) => {

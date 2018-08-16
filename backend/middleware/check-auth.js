@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
-// Must outsource the secret to its own file that can be accessed by the middleware and users.js route later
-const secret = 'secret_text_that_is_obviously_not_complicated_or_secure_enough';
+const fs = require('fs')
+// token secret
+const secret = JSON.parse(fs.readFileSync(__dirname +'/../config.json', 'UTF-8')).secret;
 
 // Auth middleware
 module.exports = (req, res, next) => {

@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
+const fs = require('fs')
+// Database URL
+const DBUrl = JSON.parse(fs.readFileSync(__dirname +'/../config.json', 'UTF-8')).DBUrl;
 
 mongoose.Promise = global.Promise;
 // Local MongoDB connection
-mongoose.connect('mongodb://localhost:27017/ShopFinder', { useNewUrlParser: true })
+mongoose.connect(DBUrl, { useNewUrlParser: true })
 .then( () => {
   console.log("Connected to database!");
 })
