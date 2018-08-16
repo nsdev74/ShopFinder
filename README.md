@@ -6,10 +6,12 @@ Project study, guidelines and conception can be found [here](https://docs.google
 
 **Note regarding deployment:** The initial goal of this project was to deploy the application on heroku for general preview, however, due to browser's *geolocation requests being deprecated over non secure connections (non HTTPS)* that will not be possible *(Because we cannot install a SSL certificate globally for free unless you do it for your local machine only or every single machine that accesses the page **manually**)* , please keep that in mind if you intend to deploy this application or access it from a different device within the same local network.
 
-#### Version 0.4.0
+#### Version 1.0.0
 
 -Includes:
-* The app's final functional form.
+* The app's full core features.
+* Mobile-friendly design.
+* Proper user experience
 
 ### What's missing?
 
