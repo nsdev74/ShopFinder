@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { NgForm } from '../../../../node_modules/@angular/forms';
 import { Subscription } from '../../../../node_modules/rxjs';
+import { NgxSpinnerService } from '../../../../node_modules/ngx-spinner';
 
 @Component({
   selector: 'app-signup',
@@ -14,12 +15,15 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   authError: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.authErrorSub = this.authService.getErrorListener().subscribe(
       authStatus => {
         this.authError = authStatus;
+        if (this.authError) {
+          this.spinner.hide();
+        }
       }
     );
   }
@@ -31,6 +35,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   onSignup(form: NgForm) {
     if (form.valid) {
       this.authService.signUp(form.value.email, form.value.password);
+      this.spinner.show();
     } else {
       // Placeholder error
       console.log('Form invalid!');
